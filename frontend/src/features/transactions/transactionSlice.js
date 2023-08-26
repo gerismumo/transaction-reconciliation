@@ -15,7 +15,7 @@ export const fetchTransactions = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const token = thunkAPI.getState().auth.user.token
-      return await transactionService.gettransactions(token)
+      return await transactionService.getTransactions(token)
     } catch (error) {
       const message =
         (error.response &&
@@ -33,8 +33,7 @@ export const addtransaction = createAsyncThunk(
   'transactions/create',
   async (transactionData, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token;
-      return await transactionService.addtransaction(transactionData,token);
+      return await transactionService.addtransaction(transactionData);
     } catch (error) {
       const message =
         (error.response &&

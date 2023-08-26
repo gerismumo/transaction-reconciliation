@@ -7,7 +7,6 @@ const userSchema = mongoose.Schema(
     },
     email: {
       type: String,
-      
     },
     policy_number: {
       type: String,
@@ -17,6 +16,7 @@ const userSchema = mongoose.Schema(
     },
     branch: {
       type: String,
+      required: [true, 'Please select a branch'],
     },
     coverage_type: {
       type: String,

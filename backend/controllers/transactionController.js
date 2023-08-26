@@ -7,15 +7,16 @@ const User = require('../models/userModel')
 // @route   GET /api/transactions
 const gettransactions = asyncHandler(async (req, res) => {
   try {
-    const user = req.user; // Assuming the user object is attached to the request via authentication middleware
-    console.log(user);
-    if (!user) {
-      res.status(401);
-      throw new Error('User not authenticated');
-    }
+    // const user = req.user; // Assuming the user object is attached to the request via authentication middleware
+    // console.log(user);
+    // if (!user) {
+    //   res.status(401);
+    //   throw new Error('User not authenticated');
+    // }
 
     // Find transactions where the branch matches the user's branch
-    const transactions = await Transaction.find({ branch: user.branch });
+    // const transactions = await Transaction.find({ branch: user.branch });
+    const transactions = await Transaction.find();
 
     res.status(200).json(transactions);
   } catch (error) {
@@ -63,7 +64,8 @@ const settransaction = asyncHandler(async (req, res) => {
     date_of_payment: new Date().toISOString(),
     client_name: user.name,
     description,
-    branch
+    branch,
+    coverage_type
   });
   res.status(200).json(transaction);
 });

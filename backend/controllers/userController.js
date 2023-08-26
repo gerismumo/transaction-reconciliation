@@ -6,20 +6,10 @@ const User = require('../models/userModel')
 // @desc    Register new user
 // @route   POST /api/users
 // @access  Public
-// Generate JWT
-const generateToken = (id) => {
-  return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: '30d',
-  })
-}
-
 const registerUser = asyncHandler(async (req, res) => {
-  const { name, email, branch, password, policy_number, id_number, coverage_type, annual_premium} = req.body
+  const { name, email, password , policy_number, branch, coverage_type, id_number, annual_premium} = req.body
 
-  // if (!name || !email || !password) {
-  //   res.status(400)
-  //   throw new Error('Please add all fields')
-  // }
+  
 
   // Check if user exists
   const userExists = await User.findOne({ email })
@@ -37,13 +27,12 @@ const registerUser = asyncHandler(async (req, res) => {
   const user = await User.create({
     name,
     email,
-    branch,
-    password: hashedPassword,
     policy_number,
-    id_number,
+    branch,
     coverage_type,
-    annual_premium
-
+    id_number,
+    annual_premium,
+    password: hashedPassword,
   })
 
   if (user) {
@@ -51,10 +40,10 @@ const registerUser = asyncHandler(async (req, res) => {
       _id: user.id,
       name: user.name,
       email: user.email,
-      branch: user.branch,
       policy_number: user.policy_number,
-      id_number: user.id_number,
+      branch: user.branch,
       coverage_type: user.coverage_type,
+      id_number: user.id_number,
       annual_premium: user.annual_premium,
       token: generateToken(user._id),
     })
@@ -68,24 +57,28 @@ const registerUser = asyncHandler(async (req, res) => {
 // @route   POST /api/users/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
-  const { email, password } = req.body;
+  const { email, password } = req.body
 
   // Check for user email
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email })
 
   if (user && (await bcrypt.compare(password, user.password))) {
     res.json({
       _id: user.id,
       name: user.name,
       email: user.email,
+      policy_number: user.policy_number,
       branch: user.branch,
-      token: generateToken(user._id), // Generate token using the defined function
-    });
+      coverage_type: user.coverage_type,
+      id_number: user.id_number,
+      annual_premium: user.annual_premium,
+      token: generateToken(user._id),
+    })
   } else {
-    res.status(400);
-    throw new Error('Invalid credentials');
+    res.status(400)
+    throw new Error('Invalid credentials')
   }
-});
+})
 
 // @desc    Get user data
 // @route   GET /api/users/me
@@ -101,18 +94,19 @@ const getUsers = asyncHandler(async (req, res) => {
 const updateUser = async (req, res) => {
   try {
     const { id } = req.params;
-    const { admin, approved } = req.body;
+    const { branch, coverage_type, annual_premium } = req.body;
 
     // Find the user by ID
-    const user = await User.findById(id); // Make sure to use the correct model name (transaction)
+    const user = await User.findById(id); // Make sure to use the correct model name (Subject)
 
     if (!user) {
       return res.status(404).json({ message: 'user not found' });
     }
 
     // Update the user properties
-    user.admin = admin;
-    user.approved = approved;
+    user.coverage_type = coverage_type;
+    user.branch = branch;
+    user.annual_premium = annual_premium;
     // Save the updated user
     await user.save();
 
@@ -122,7 +116,12 @@ const updateUser = async (req, res) => {
     res.status(500).json({ message: 'Server Error' });
   }
 };
-
+// Generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: '30d',
+  })
+}
 
 module.exports = {
   registerUser,

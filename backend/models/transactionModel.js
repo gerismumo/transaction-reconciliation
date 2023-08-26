@@ -18,6 +18,10 @@ const transactionSchema = mongoose.Schema(
       type: String,
       ref: 'User',
     },
+    coverage_type: {
+      type: String,
+      ref: 'User',
+    },
     description: {
       type: String
     },

@@ -2,26 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
-// import { gettransactions } from '../features/transactions/transactionSlice';
 
 function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  // const { transactions, isError, message } = useSelector(
-  //   (state) => state.transactions
-  // );
-
-  // useEffect(() => {
-  //   if (isError) {
-  //     console.log(message);
-  //   }
-
-  //   // dispatch(gettransactions());
-  //   return () => {
-  //     dispatch(reset());
-  //   };
-  // }, [user, navigate, isError, message, dispatch]);
+  
 
   const onLogout = () => {
     dispatch(logout());

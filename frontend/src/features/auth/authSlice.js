@@ -35,7 +35,7 @@ export const updateUser = createAsyncThunk(
   'users/update',
   async (userData, thunkAPI) => {
     try {
-      const { id } = userData; // Extract the id from transactionData
+      const { id } = userData; // Extract the id from subjectData
       const token = thunkAPI.getState().auth.user.token;
       return await authService.updateUser(userData, id, token);
     } catch (error) {
@@ -111,9 +111,9 @@ export const authSlice = createSlice({
         state.isLoading = true
       })
       .addCase(register.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = action.payload
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false
@@ -125,9 +125,9 @@ export const authSlice = createSlice({
         state.isLoading = true
       })
       .addCase(login.fulfilled, (state, action) => {
-        state.isLoading = false
-        state.isSuccess = true
-        state.user = action.payload
+        state.isLoading = false;
+        state.isSuccess = true;
+        state.user = action.payload;
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false

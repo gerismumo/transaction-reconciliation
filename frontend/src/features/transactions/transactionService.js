@@ -2,7 +2,7 @@ import axios from 'axios'
 
 const API_URL = '/api/transactions/'
 // Get user transactions
-const gettransactions = async (token) => {
+const getTransactions = async (token) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -22,7 +22,7 @@ const addtransaction = async (transactionData) => {
 }
 
 const transactionService = {
-  gettransactions,
+  getTransactions,
   addtransaction,
 }
 
