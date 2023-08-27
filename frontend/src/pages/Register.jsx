@@ -34,19 +34,20 @@ function Register() {
     'Health',
     'Property',
     'PrivateVehicle/Comprehensive',
-    'PrivateVehicle/Third Party',
+    'PrivateVehicle/ThirdParty',
     'CommercialVehicle/Comprehensive',
-    'CommercialVehicle/third Party',
+    'CommercialVehicle/ThirdParty',
   ];
   useEffect(() => {
     if (isError) {
       toast.error(message);
     }
 
-    if (isSuccess) {
+    if ( isSuccess ) {
         navigate('/health');
     }
     dispatch(reset());
+    
   }, [user, isError, isSuccess, message, navigate, dispatch]);
 
   const onChange = (e) => {

@@ -10,6 +10,7 @@ const userSchema = mongoose.Schema(
     },
     policy_number: {
       type: String,
+      unique: true,
     },
     id_number: {
       type: Number,
@@ -23,12 +24,7 @@ const userSchema = mongoose.Schema(
     },
     annual_premium: {
       type: Number,
-    },
-    start_date: {
-      type: String,
-    },
-    
-  
+    }
   },
   {
     timestamps: true,

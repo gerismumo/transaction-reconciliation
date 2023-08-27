@@ -1,62 +1,68 @@
-import React from "react";
-import {  useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
-import { toast } from 'react-toastify'
-import {  reset } from '../features/auth/authSlice'
-import Spinner from '../components/Spinner'
-import {useNavigate } from 'react-router-dom'
-function PrivateVTP () {
-     const navigate = useNavigate()
-    const dispatch = useDispatch()
-  
-    const { user, isLoading, isError, isSuccess, message } = useSelector(
-      (state) => state.auth
-    )
-  
-    useEffect(() => {
-      if (isError) {
-        toast.error(message)
-      }
-  
-      if (!user) {
-        
-        navigate('/');
-      }
-  
-      dispatch(reset())
-    }, [user, isError, isSuccess, message, navigate, dispatch])
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { reset } from '../features/auth/authSlice';
+import Spinner from '../components/Spinner';
+import { useNavigate } from 'react-router-dom';
+import { gettransactions } from '../features/transactions/transactionSlice';
+
+function  PrivateVTP() {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.auth);
+  const { transactions, isError, message } = useSelector((state) => state.transactions);
+
+  useEffect(() => {
+    if (isError) {
+      console.log(message);
+    }
+
+    if (!user) {
+      navigate('/');
+      return;
+    }
+    dispatch(gettransactions());
+
+    return () => {
+      dispatch(reset());
+    };
+  }, [user, navigate, isError, message, dispatch]);
+
+  const filteredTransactions = transactions.filter(
+    (transaction) =>
+      transaction.branch === user.branch && transaction.coverage_type === 'PrivateVehicle/ThirdParty'
+  );
     return(
         <>
          {/* < Header /> */}
         <div className="health">
-            <h2>Private Third Party Transactions</h2>
+            <h2>Private Vehicle ThirdParty Transactions</h2>
             <table>
-                <thead>
+              <thead>
                 <tr>
-                    <th>Date of payment</th>
-                    <th>Policy Number</th>
-                    <th>Client’s name</th>
-                    <th>Description</th>
-                    <th>Amount Paid</th>
+                  <th>Date of payment</th>
+                  <th>Policy Number</th>
+                  <th>Client’s name</th>
+                  <th>Description</th>
+                  <th>Amount Paid</th>
                 </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td>2023-08-26</td>
-                    <td>P12345</td>
-                    <td>John Doe</td>
-                    <td>Check-up</td>
-                    <td>$100</td>
+              </thead>
+              {filteredTransactions.length > 0 ? (
+              <tbody>
+              {filteredTransactions.map((transaction) => (
+                <tr key={transaction._id}>
+                  <td>{transaction.date_of_payment}</td>
+                  <td>{transaction.policy_number}</td>
+                  <td>{transaction.client_name}</td>
+                  <td>{transaction.description}</td>
+                  <td>Ksh {transaction.amount}</td>
                 </tr>
-                <tr>
-                    <td>2023-08-25</td>
-                    <td>P67890</td>
-                    <td>Jane Smith</td>
-                    <td>Medication</td>
-                    <td>$50</td>
-                </tr>
-                {/* Add more rows as needed */}
-                </tbody>
+              ))}
+              </tbody>
+            ) : (
+                <p>No Private Vehicle ThirdParty Transactions insurance transactions yet</p>
+            )}
+            
             </table>
         </div>
         </>

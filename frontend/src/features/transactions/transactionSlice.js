@@ -10,12 +10,12 @@ const initialState = {
 }
 
 // Get user transactions
-export const fetchTransactions = createAsyncThunk(
+export const gettransactions = createAsyncThunk(
   'transactions/getAll',
   async (_, thunkAPI) => {
     try {
-      const token = thunkAPI.getState().auth.user.token
-      return await transactionService.getTransactions(token)
+     
+      return await transactionService.gettransactions()
     } catch (error) {
       const message =
         (error.response &&
@@ -58,15 +58,15 @@ export const transactionSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchTransactions.pending, (state) => {
+      .addCase(gettransactions.pending, (state) => {
         state.isLoading = true
       })
-      .addCase(fetchTransactions.fulfilled, (state, action) => {
+      .addCase(gettransactions.fulfilled, (state, action) => {
         state.isLoading = false
         state.isSuccess = true
         state.transactions = action.payload
       })
-      .addCase(fetchTransactions.rejected, (state, action) => {
+      .addCase(gettransactions.rejected, (state, action) => {
         state.isLoading = false
         state.isError = true
         state.message = action.payload

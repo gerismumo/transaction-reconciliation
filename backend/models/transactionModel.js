@@ -7,12 +7,10 @@ const transactionSchema = mongoose.Schema(
       type: String
     },
     policy_number: {
-      type: String,
-      ref: 'User',
+      type: String
     },
     client_name: {
       type: String,
-      ref: 'User',
     },
     branch: {
       type: String,
@@ -20,7 +18,6 @@ const transactionSchema = mongoose.Schema(
     },
     coverage_type: {
       type: String,
-      ref: 'User',
     },
     description: {
       type: String

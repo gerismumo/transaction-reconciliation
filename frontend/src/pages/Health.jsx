@@ -1,62 +1,46 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { reset } from '../features/auth/authSlice';
-import Spinner from '../components/Spinner';
-import { useNavigate } from 'react-router-dom';
-import { fetchTransactions } from '../features/transactions/transactionSlice';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { reset } from '../features/auth/authSlice'
+import { gettransactions } from '../features/transactions/transactionSlice';
 
 function Health() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const { user, isLoading, isError, isSuccess, message } = useSelector(
-    (state) => state.auth
-  );
-  const { transactions } = useSelector((state) => state.transactions);
-
-  const [filteredTransactions, setFilteredTransactions] = useState([]);
+  const { user } = useSelector((state) => state.auth);
+  const { transactions, isError, message } = useSelector((state) => state.transactions);
 
   useEffect(() => {
     if (isError) {
-      toast.error(message);
+      console.log(message);
     }
 
     if (!user) {
       navigate('/');
       return;
     }
-    if (!user || !user.branch) {
-      console.log("User or user's branch is undefined");
-      return;
-    }
-    
-    console.log(transactions);
-console.log(user);
-    dispatch(fetchTransactions())
-      .then(() => {
-        const filtered = transactions.filter(
-          (transaction) =>
-            transaction.branch === user.branch && transaction.coverage_type === 'Health'
-        );
-        setFilteredTransactions(filtered);
-      })
-      .catch((error) => {
-        console.error(error);
-      })
-      .finally(() => {
-        dispatch(reset());
-      });
-  }, [user, isError, message, navigate, dispatch, transactions]);
+    dispatch(gettransactions());
 
-  if (!user || isLoading) {
-    return <Spinner />;
-  }
+    return () => {
+      dispatch(reset());
+    };
+  }, [user, navigate, isError, message, dispatch]);
+
+  const filteredTransactions = transactions.filter(
+    (transaction) =>
+      transaction.branch === user.branch && transaction.coverage_type === 'Health'
+  );
 
   return (
     <>
       <div className="health">
-        <h2>Health Transactions</h2>
+        <h2>Health Transactions </h2>
+        {user ? ( 
+          <div >Branch: {user && user.branch}</div> 
+          ): (
+            <>no user</>
+          )
+        }
         <table>
           <thead>
             <tr>
@@ -67,7 +51,9 @@ console.log(user);
               <th>Amount Paid</th>
             </tr>
           </thead>
-          <tbody>
+         
+          {filteredTransactions.length > 0 ? (
+             <tbody>
             {filteredTransactions.map((transaction) => (
               <tr key={transaction._id}>
                 <td>{transaction.date_of_payment}</td>
@@ -77,7 +63,11 @@ console.log(user);
                 <td>Ksh {transaction.amount}</td>
               </tr>
             ))}
-          </tbody>
+            </tbody>
+          ) : (
+              <p>No health insurance transactions yet</p>
+          )}
+          
         </table>
       </div>
     </>
