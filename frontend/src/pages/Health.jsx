@@ -35,12 +35,6 @@ function Health() {
     <>
       <div className="health">
         <h2>Health Transactions </h2>
-        {user ? ( 
-          <div >Branch: {user && user.branch}</div> 
-          ): (
-            <>no user</>
-          )
-        }
         <table>
           <thead>
             <tr>

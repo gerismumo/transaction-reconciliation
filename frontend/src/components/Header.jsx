@@ -7,13 +7,15 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-  
+
 
   const onLogout = () => {
     dispatch(logout());
     dispatch(reset());
     navigate('/');
+    window.location.reload(); // Reload the page
   };
+  
 
   return (
     <>
@@ -56,7 +58,9 @@ function Header() {
                 {user ? (
                   <>
                     <li>
+                    <Link to="/">
                       <button style={{ cursor: 'pointer'}} onClick={onLogout}>Logout</button>
+                      </Link>
                     </li>
                   </>
                 ) : (
