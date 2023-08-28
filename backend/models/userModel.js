@@ -24,7 +24,10 @@ const userSchema = mongoose.Schema(
     },
     annual_premium: {
       type: Number,
-    }
+    },
+    password: {
+      type: String
+    },
   },
   {
     timestamps: true,
