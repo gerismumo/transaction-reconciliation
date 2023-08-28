@@ -104,6 +104,10 @@ button{
   nav ul li.login {
     margin-left: 0;
   }
+  .payment-form .heading, 
+  .payment-form .form{
+    width: 90%;
+   }
 }
 /* Container Styles */
 .health, .property, .private-vc {
