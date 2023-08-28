@@ -50,7 +50,7 @@ function TestForm() {
   return (
     <>
       <div className='payment-form'>
-        <section className='heading' style={{ color: '#ffff', width: '100%' }}>
+        <section className='heading' style={{ color: '#ffff'}}>
           <h1>TestForm</h1>
         </section>
         <section className='form'>

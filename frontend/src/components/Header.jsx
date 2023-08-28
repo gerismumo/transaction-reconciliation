@@ -22,7 +22,16 @@ function Header() {
       <div className='header'>
         <nav>
           <div className='logo'>
-            <h2>Insurance</h2>
+           
+            {user ? (
+                  <>
+                    <h2>ITR {user.branch}</h2> 
+                  </>
+                ) : (
+                  <>
+                  <h2>Insurance Transactions Reconciliation (ITR)</h2>
+                  </>
+                )}
           </div>
           <div className='links'>
             {user && (
@@ -55,17 +64,23 @@ function Header() {
 
             <div className='auth-links'>
               <ul>
+              <Link to="/payment">
+                  <button style={{ cursor: 'pointer', color: '#ffff'}}>Transact Here</button>
+              </Link>
                 {user ? (
                   <>
                     <li>
                     <Link to="/">
-                      <button style={{ cursor: 'pointer'}} onClick={onLogout}>Logout</button>
+                      <button style={{ cursor: 'pointer',  color: '#ffff'}} onClick={onLogout}>Logout</button>
                       </Link>
                     </li>
                   </>
                 ) : (
-                  <></>
+                  <>
+                 
+                  </>
                 )}
+               
               </ul>
             </div>
           </div>

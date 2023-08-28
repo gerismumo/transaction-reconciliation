@@ -220,12 +220,14 @@ table tbody tr:hover {
 }
 .payment-form{
   
-  margin-right: 400px;
-  margin-left: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 
 }
 .payment-form .heading{
- width: 100%;
+ width: 60%;
 }
 /* Add more styles as needed */
 
