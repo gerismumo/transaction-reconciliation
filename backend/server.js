@@ -29,6 +29,7 @@ if (process.env.NODE_ENV === 'production') {
   //     path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
   //   )
   // );
+  app.get('/', (req, res) => res.send('backend set'));
 app.use('/api/transactions', require('./routes/transactionRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
  
