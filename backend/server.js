@@ -12,26 +12,13 @@ connectDB();
 
 const app = express();
 
-const allowedOrigins = ['https://insurance-transactions-reconciliation.vercel.app'];
-
-const corsOptions = {
-  origin: function (origin, callback) {
-    if (allowedOrigins.includes(origin) || !origin) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-};
-
 // Use CORS middleware with options
-app.use(cors(corsOptions));
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-app.use('/api/transactions', require('./routes/transactionRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
+
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
@@ -42,13 +29,9 @@ if (process.env.NODE_ENV === 'production') {
   //     path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
   //   )
   // );
-  app.use(express.static(path.join(__dirname, '../frontend/public')));
-
-  app.get('*', (req, res) =>
-    res.sendFile(
-      path.resolve(__dirname, '../', 'frontend', 'public', 'index.html')
-    )
-  );
+app.use('/api/transactions', require('./routes/transactionRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
+ 
 } else {
   app.get('/', (req, res) => res.send('Please set to production'));
 }
