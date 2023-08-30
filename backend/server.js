@@ -11,28 +11,23 @@ dotenv.config();
 connectDB();
 
 const app = express();
-
-// Use CORS middleware with options
 app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-
+app.use('/api/transactions', require('./routes/transactionRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
-  // app.use(express.static(path.join(__dirname, '../frontend/build')));
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
 
-  // app.get('*', (req, res) =>
-  //   res.sendFile(
-  //     path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
-  //   )
-  // );
-  app.get('/', (req, res) => res.send('backend set'));
-app.use('/api/transactions', require('./routes/transactionRoutes'));
-app.use('/api/users', require('./routes/userRoutes'));
- 
+  app.get('*', (req, res) =>
+    res.sendFile(
+      path.resolve(__dirname, '../', 'frontend', 'build', 'index.html')
+    )
+  );
 } else {
   app.get('/', (req, res) => res.send('Please set to production'));
 }
