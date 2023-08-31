@@ -40,7 +40,7 @@ app.use('/api/users', require('./routes/userRoutes'));
 //   );
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../frontend/build/static')));
+  // app.use(express.static(path.join(__dirname, '../frontend/build/static')));
 
   app.get('/', (req, res) =>
     res.sendFile(
