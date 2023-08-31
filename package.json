@@ -1,5 +1,5 @@
 {
-  "name": "mern-app",
+  "name": "itr-api",
   "version": "1.0.0",
   "description": "transactionsetter app",
   "main": "server.js",

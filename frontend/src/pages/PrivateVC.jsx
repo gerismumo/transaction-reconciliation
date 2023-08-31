@@ -34,7 +34,6 @@ function  PrivateVC() {
   );
     return(
         <>
-         {/* < Header /> */}
         <div className="private-vc">
         <h2>Private Vehicle Comprehensive Transactions</h2>
         <table>
