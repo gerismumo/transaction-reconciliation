@@ -45,11 +45,12 @@ if (process.env.NODE_ENV === 'production') {
   //     path.resolve(__dirname, '../', 'frontend', 'build', 'static', 'index.html')
   //   )
   // );
-  app.get('/', (req, res) =>
-    res.sendFile(
-      path.resolve(__dirname, 'index.html')
-    )
-  );
+  app.get('/', (req, res) => res.send('backend set'));
+  // app.get('/', (req, res) =>
+  //   res.sendFile(
+  //     path.resolve(__dirname, 'index.html')
+  //   )
+  // );
 } else {
   app.get('/', (req, res) => res.send('Please set to production'));
 }
