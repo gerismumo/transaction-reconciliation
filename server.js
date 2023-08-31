@@ -26,7 +26,7 @@ const app = express();
 
 // Use CORS middleware with options
 // app.use(cors(corsOptions));
-app.use(cors);
+app.use(cors());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -36,7 +36,7 @@ app.use('/api/users', require('./backend/routes/userRoutes'));
 
 
 // Serve frontend
-// if (process.env.NODE_ENV === 'production') {
+if (process.env.NODE_ENV === 'production') {
   // app.use(express.static(path.join(__dirname, '../frontend/build/static')));
 
   // app.get('/', (req, res) =>
@@ -49,9 +49,9 @@ app.use('/api/users', require('./backend/routes/userRoutes'));
       path.resolve(__dirname, 'index.html')
     )
   );
-// } else {
-//   app.get('/', (req, res) => res.send('Please set to production'));
-// }
+} else {
+  app.get('/', (req, res) => res.send('Please set to production'));
+}
 
 
 app.use(errorHandler);
