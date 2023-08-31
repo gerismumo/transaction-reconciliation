@@ -33,11 +33,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/transactions', require('./routes/transactionRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 
-app.get('/', (req, res) =>
-    res.sendFile(
-      path.resolve(__dirname, 'index.html')
-    )
-  );
+// app.get('/', (req, res) =>
+//     res.sendFile(
+//       path.resolve(__dirname, 'index.html')
+//     )
+//   );
 // Serve frontend
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../frontend/build')));
