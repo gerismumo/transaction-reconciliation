@@ -14,7 +14,13 @@ connectDB();
 
 const app = express();
 
-app.use(cors());
+app.use(cors(
+  {
+      origin: [""],
+      methods: ["POST", "GET", "PUT", "DELETE"]
+  }
+));
+
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
@@ -22,6 +28,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use('/api/transactions', require('./routes/transactionRoutes'));
 app.use('/api/users', require('./routes/userRoutes'));
 
+app.get("/", (req, res) => {
+  res.json("IRT API");
+})
 
 app.use(errorHandler);
 const server = http.createServer(app);
