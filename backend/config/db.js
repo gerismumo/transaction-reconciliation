@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
   const mongoDBUrl = process.env.MONGO_URI;
   const maxRetries = 5; // Maximum number of connection retries
-  const retryInterval = 5000; // Retry interval in milliseconds (e.g., 5 seconds)
+  const retryInterval = 20000; // Retry interval in milliseconds (e.g., 5 seconds)
   let retryCount = 0;
 
   const connectWithRetry = async () => {
