@@ -1,4 +1,10 @@
 {
+    "version": 2,
+    "functions": {
+      "api/transactions": {
+        "maxDuration": 30
+      }
+    },
     "builds": [
       { "src": "*.js", "use": "@vercel/node" }
     ],
