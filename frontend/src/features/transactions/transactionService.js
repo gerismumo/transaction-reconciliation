@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = '/api/transactions/'
+const API_URL = process.env.REACT_APP_API_URL + '/api/transactions/'
 // Get user transactions
 const gettransactions = async (token) => {
  
