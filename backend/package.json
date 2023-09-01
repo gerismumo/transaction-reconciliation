@@ -2,12 +2,12 @@
   "name": "itr-api",
   "version": "1.0.0",
   "description": "transactionsetter app",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node server.js",
-    "server": "nodemon server.js",
+    "start": "node index.js",
+    "index": "nodemon index.js",
     "client": "npm start --prefix frontend",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "dev": "concurrently \"npm run index\" \"npm run client\""
   },
   "author": "Daniel Musunza",
   "license": "MIT",
