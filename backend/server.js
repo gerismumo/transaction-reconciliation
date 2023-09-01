@@ -13,22 +13,7 @@ connectDB();
 
 const app = express();
 
-// const allowedOrigins = ['https://transaction-reconciliation.vercel.app', 'http://localhost'];
-
-// const corsOptions = {
-//   origin: function (origin, callback) {
-//     if (allowedOrigins.includes(origin) || !origin) {
-//       callback(null, true);
-//     } else {
-//       callback(new Error('Not allowed by CORS'));
-//     }
-//   },
-// };
-
-// Use CORS middleware with options
-// app.use(cors(corsOptions));
 app.use(cors());
-// app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
