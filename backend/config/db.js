@@ -6,13 +6,13 @@ const connectDB = async () => {
   const retryInterval = 30000; // Retry interval in milliseconds (e.g., 5 seconds)
   let retryCount = 0;
 
+  
   const connectWithRetry = async () => {
     try {
       const conn = await mongoose.connect(mongoDBUrl, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
       });
-
       console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (error) {
       console.error('MongoDB Connection Error:', error);
