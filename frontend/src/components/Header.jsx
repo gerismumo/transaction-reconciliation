@@ -7,7 +7,7 @@ function Header() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.auth);
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const onLogout = () => {
     dispatch(logout());
@@ -15,7 +15,10 @@ function Header() {
     navigate('/');
     window.location.reload(); // Reload the page
   };
-  
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
     <>
@@ -29,7 +32,7 @@ function Header() {
                   </>
                 ) : (
                   <>
-                  <h2>Insurance Transactions Reconciliation (ITR)</h2>
+                  <h2>ITR</h2>
                   </>
                 )}
           </div>
@@ -84,6 +87,37 @@ function Header() {
               </ul>
             </div>
           </div>
+          <div className="menu" onClick={toggleMenu}>
+            <h2>Menu</h2>
+          </div>
+          {isMenuOpen && (
+            <div className='mobile-links'>
+                <ul>
+                  <li>
+                    <Link to='/health'>Health</Link>
+                  </li>
+                  <li>
+                    <Link to='/property'>Property</Link>
+                  </li>
+                  <li>
+                    <Link to='/privatevc'>PrivateVehicle/Comprehensive</Link>
+                  </li>
+                  <li>
+                    <Link to='/privatevtp'>PrivateVehicle/Third Party</Link>
+                  </li>
+                  <li>
+                    <Link to='/commercialvc'>Commercial Vehicle/ Comprehensive</Link>
+                  </li>
+                  <li>
+                    <Link to='/commercialvtp'>Commercial Vehicle/third Party</Link>
+                  </li>
+                  <li>
+                    <Link to='/register'>New Client</Link>
+                  </li>
+                </ul>
+            </div>
+          )}
+          
         </nav>
       </div>
     </>
