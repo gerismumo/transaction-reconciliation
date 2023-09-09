@@ -72,11 +72,11 @@ function Header() {
               </Link>
                 {user ? (
                   <>
-                    <div className='logout'>
+                    <li className='logout'>
                     <Link to="/">
                       <button style={{ cursor: 'pointer',  color: '#ffff'}} onClick={onLogout}>Logout</button>
                       </Link>
-                    </div>
+                    </li>
                   </>
                 ) : (
                   <>
@@ -89,11 +89,19 @@ function Header() {
           </div>
           <div className="menu" onClick={toggleMenu}>
             <h2>Menu</h2>
-            <li>
-            <Link to="/">
-            <button style={{ cursor: 'pointer',  color: '#ffff'}} onClick={onLogout}>Logout</button>
-            </Link>
-          </li>
+            {user ? (
+             <>
+            <div>
+             <Link to="/">
+             <button style={{ cursor: 'pointer',  color: '#ffff'}} onClick={onLogout}>Logout</button>
+             </Link>
+            </div>
+            </>
+            ) : (
+              <>
+             
+              </>
+            )}
           </div>
           {isMenuOpen && user && (
             <div className='mobile-links' onClick={toggleMenu} >
