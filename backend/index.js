@@ -17,8 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors(
   {
    
-      origin: ["https://transaction-reconciliation.vercel.app"],
-      // origin: ["http://localhost:3000"],
+      // origin: ["https://transaction-reconciliation.vercel.app"],
+      origin: ["http://localhost:3000, http://192.168.0.110:3000, https://transaction-reconciliation.vercel.app"],
       methods: ["POST", "GET", "PUT", "DELETE"]
   }
 ));

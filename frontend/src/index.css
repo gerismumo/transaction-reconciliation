@@ -90,7 +90,7 @@ button{
   padding: 5px 10px;
   font-size: medium;
 }
-@media (max-width: 768px) {
+@media (max-width: 900px) {
   nav ul {
     flex-direction: column;
     align-items: center;
@@ -108,6 +108,12 @@ button{
   .payment-form .form{
     width: 90%;
    }
+   table {
+    width: 400px;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow-x: scroll;
+  }
 }
 /* Container Styles */
 .health, .property, .private-vc {
