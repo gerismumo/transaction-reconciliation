@@ -91,7 +91,7 @@ function Header() {
             <h2>Menu</h2>
           </div>
           {isMenuOpen && user && (
-            <div className='mobile-links'>
+            <div className='mobile-links' onClick={toggleMenu}>
                 <ul>
                   <li>
                     <Link to='/health'>Health</Link>
