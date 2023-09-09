@@ -90,7 +90,7 @@ function Header() {
           <div className="menu" onClick={toggleMenu}>
             <h2>Menu</h2>
           </div>
-          {isMenuOpen && (
+          {isMenuOpen && user && (
             <div className='mobile-links'>
                 <ul>
                   <li>
