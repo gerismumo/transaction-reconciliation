@@ -72,11 +72,11 @@ function Header() {
               </Link>
                 {user ? (
                   <>
-                    <li className='logout'>
+                    <div className='logout'>
                     <Link to="/">
                       <button style={{ cursor: 'pointer',  color: '#ffff'}} onClick={onLogout}>Logout</button>
                       </Link>
-                    </li>
+                    </div>
                   </>
                 ) : (
                   <>
