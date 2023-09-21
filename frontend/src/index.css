@@ -340,6 +340,7 @@ table tbody tr:hover {
 /* Dashboard css */
 .dashboard{
   padding: 10px 5px;
+  background-color: whitesmoke;
 }
 .dashboard .dash-page{
   display: flex;
@@ -369,6 +370,7 @@ dashboard .sidebar{
   align-items: center;
   justify-content: space-between;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  background-color: white;
 }
 .dashboard .dash-header .dash-log {
   margin-left: 20px;
@@ -395,12 +397,15 @@ dashboard .sidebar{
 }
 .dashboard .dash-main {
   margin-top: 10px;
-  background-color: white;
+  /* background-color: white; */
 }
 .dashboard .main-card {
   display: flex;
+  justify-content: center;
+  gap: 30px;
 }
 
+/* transcation card */
 .dashboard .transaction-card {
   display: flex;
   justify-content: space-between;
@@ -466,3 +471,84 @@ dashboard .sidebar{
 .dashboard .year-money p:last-child{
   font-size: 18px;
 }
+
+/* policy card css */
+.dashboard .policy-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  width: 200px;
+  height: inherit;
+  background-color: white;
+  border-radius: 5px;
+}
+.dashboard .policy-card .policy-name {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.dashboard .policy-name p {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+.dashboard .Policy-icon-total {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  align-items: center;
+  
+}
+.dashboard .Policy-icon-total .policy-total{
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.dashboard .policy-total p {
+  margin: 0;
+}
+.dashboard .policy-card .policy-total p:first-child {
+  font-weight: bold;
+}
+.dashboard .policy-card .policy-total p:last-child {
+  font-size: 13px;
+  color: grey;
+}
+.dashboard .policy-icon {
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  color: #488aec;
+  margin-left: 10px;
+  font-size: 25px;
+  align-items: center;
+  /* flex-direction: column; */
+}
+.dashboard .policy-category {
+  border-top: 2px solid #d2d0d0;
+  margin-left: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1px;
+  margin-right: 20px;
+}
+
+.dashboard .policy-category .pending-policy,
+.dashboard .policy-category .inBind-policy,
+.dashboard .policy-category .closed-policy {
+  grid-column: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: black;
+}
+
+
+
