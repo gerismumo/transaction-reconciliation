@@ -56,7 +56,7 @@ function Dashboard() {
                                     <FontAwesomeIcon icon={faMoneyBillAlt} />
                                     </div>
                                     <div className="money-text">
-                                        <p>Money earned</p>
+                                        <p>MONEY EARNED</p>
                                     </div>
                                 </div>
                                 <div className="money-rate">
