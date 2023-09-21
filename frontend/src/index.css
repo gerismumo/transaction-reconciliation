@@ -550,5 +550,82 @@ dashboard .sidebar{
   color: black;
 }
 
+/* claims card css */
+.dashboard .claims-card {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid white;
+  width: 200px;
+  height: inherit;
+  background-color: white;
+  border-radius: 5px;
+}
+.dashboard .claims-card .policy-name {
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.dashboard .policy-name p {
+  font-size: 16px;
+  font-weight: bold;
+  margin-left: 20px;
+}
+.dashboard .Policy-icon-total {
+  display: flex;
+  justify-content: space-between;
+  margin: 0;
+  align-items: center;
+  
+}
+.dashboard .Policy-icon-total .policy-total{
+  display: flex;
+  flex-direction: column;
+  margin-right: 10px;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.dashboard .policy-total p {
+  margin: 0;
+}
+.dashboard .claims-card .policy-total p:first-child {
+  font-weight: bold;
+}
+.dashboard .claims-card .policy-total p:last-child {
+  font-size: 13px;
+  color: grey;
+}
+.dashboard .policy-icon {
+  background-color: #eee;
+  padding: 10px;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  color: #488aec;
+  margin-left: 10px;
+  font-size: 25px;
+  align-items: center;
+  /* flex-direction: column; */
+}
+.dashboard .claims-card .policy-category {
+  border-top: 2px solid #d2d0d0;
+  margin-left: 20px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 1px;
+  margin-right: 20px;
+}
+
+.dashboard .claims-card .policy-category .pending-policy,
+.dashboard .claims-card .policy-category .inBind-policy,
+.dashboard .claims-card .policy-category .closed-policy {
+  grid-column: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  color: black;
+}
 
 

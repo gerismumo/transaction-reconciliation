@@ -98,7 +98,7 @@ function Dashboard() {
                                     </div>
                                 </div>
                             </div>
-                            {/* <div className="claims-card">
+                            <div className="claims-card">
                             <div className="policy-name">
                                     <p>CLAIMS</p>
                                 </div>
@@ -116,7 +116,7 @@ function Dashboard() {
                                         <p>10</p>
                                         <p>Paid</p>
                                     </div>
-                                    <div className="inbind-policy">
+                                    <div className="inBind-policy">
                                         <p>9</p>
                                         <p>Pending</p>
                                     </div>
@@ -125,7 +125,7 @@ function Dashboard() {
                                         <p>Rejected</p>
                                     </div>
                                 </div>
-                            </div> */}
+                            </div>
                         </div>
                     </div>
                 </div>
