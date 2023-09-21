@@ -345,8 +345,10 @@ table tbody tr:hover {
 .dashboard .dash-page{
   display: flex;
 }
-dashboard .sidebar{
+.dashboard .sidebar{
   width: 10%;
+  background-color: white;
+
 }
 .dashboard .sidebar .sidebar-log {
   display: flex;
@@ -361,7 +363,7 @@ dashboard .sidebar{
   text-decoration: none;
 }
 .dashboard .dash-content {
-  width: 90%;
+  width: 88%;
   display: flex;
   flex-direction: column;
 }
@@ -404,6 +406,11 @@ dashboard .sidebar{
   justify-content: center;
   gap: 30px;
 }
+.dashboard .cards {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
 
 /* transcation card */
 .dashboard .transaction-card {
@@ -412,7 +419,7 @@ dashboard .sidebar{
   border: 1px solid #f5f5dc;
   border-radius: 5px;
   width: 307px;
-  height: 180px;
+  height: inherit;
   background-color: #f5f5dc;
   gap: 5px;
 }
@@ -470,6 +477,83 @@ dashboard .sidebar{
 }
 .dashboard .year-money p:last-child{
   font-size: 18px;
+}
+.dashboard .minor-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
+/* members card css */
+.dashboard .members-cards {
+  display: flex;
+  justify-content: space-between;
+  border: 1px solid #f5f5dc;
+  border-radius: 5px;
+  width: 307px;
+  height: inherit;
+  background-color: lightblue;
+  gap: 5px;
+}
+.dashboard .members-cards .money-text-icon {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 20px;
+}
+.dashboard .money-icon svg{
+  margin-top: 30px;
+  display: flex;
+  font-size: 40px;
+  align-items: center;
+  color: orangered;
+}
+.dashboard .money-text p{
+  font-size: 20px;
+}
+.dashboard .money-text {
+  margin-bottom: 20px;
+}
+.dashboard .members-cards .money-rate {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-right: 10px;
+}
+.dashboard .month-money {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+.dashboard .month-money  p{
+  margin: 0;
+}
+.dashboard .month-money p:first-child{
+  font-size: 13px;
+}
+.dashboard .month-money p:last-child{
+  font-size: 18px;
+}
+.dashboard .year-money {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+.dashboard .year-money  p{
+  margin: 0;
+}
+.dashboard .year-money p:first-child{
+  font-size: 13px;
+}
+.dashboard .year-money p:last-child{
+  font-size: 18px;
+}
+.dashboard .minor-cards {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
 }
 
 /* policy card css */
@@ -627,5 +711,55 @@ dashboard .sidebar{
   gap: 20px;
   color: black;
 }
+
+/* type of transactions css */
+.dashboard .type-transactions{
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  width: 200px;
+  height: inherit;
+  border-radius: 5px;
+}
+
+.dashboard .type-transactions .type-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.dashboard .type-transactions .type-header p{
+  font-weight: bold;
+  font-size: 18px;
+}
+.dashboard .type-transactions .period-select {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
+  margin-right: 20px;
+}
+.dashboard .type-transactions .period-select select {
+  width: 90px;
+  height: 40px;
+  border-radius: 0;
+  border:  1px solid black;
+  padding: 0;
+}
+.dashboard .type-transactions .period-select option {
+  font-size: 12px;
+}
+.dashboard .type-transactions .insurance-money {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.dashboard .type-transactions .insurance-money .property-insure,
+.dashboard .type-transactions .insurance-money .health-insure,
+.dashboard .type-transactions .insurance-money .vehicle-tp {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
 
 
