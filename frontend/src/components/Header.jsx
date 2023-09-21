@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
 import { logout, reset } from '../features/auth/authSlice';
 
 function Header() {
@@ -40,6 +40,9 @@ function Header() {
             {user && (
               <div className='middle-links'>
                 <ul>
+                  <li>
+                    <Link to='/home'>Home</Link>
+                  </li>
                   <li>
                     <Link to='/health'>Health</Link>
                   </li>
