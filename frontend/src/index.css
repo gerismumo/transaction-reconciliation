@@ -345,55 +345,11 @@ table tbody tr:hover {
   display: flex;
 }
 .dashboard .sidebar{
-  width: 10%;
-}
-.dashboard .sidebar .sidebar-log {
-  display: flex;
-  align-items: center;
-}
-.dashboard .sidebar .sidebar-links ul{
-  list-style: none;
-  text-decoration: none;
-  
-}
-.dashboard .sidebar .sidebar-links a {
-  text-decoration: none;
+  width: 20%;
 }
 .dashboard .dash-content {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
+  width: 80%;
 }
 .dashboard .dash-content .dash-header {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
-.dashboard .dash-header .dash-log {
-  margin-left: 20px;
-}
-.dashboard .dash-header .dash-log h2 {
-  font-size: 22px;
-  font-weight: bold;
-}
-.dashboard .dash-header .header-detail {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 20px;
-}
-.dashboard .dash-header .header-detail .search input{
-  border-radius: 5px;
-  /* border: 1px black; */
-}
-.dashboard .dash-header .header-detail .branch-name {
-  margin-right: 20px;
-}
-.dashboard .dash-header .header-detail .branch-name p{
-  font-size: 20px;
-}
-.dashboard .dash-main {
-  background-color: whitesmoke;
-}
-
