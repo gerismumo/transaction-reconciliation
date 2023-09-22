@@ -188,6 +188,45 @@ function Dashboard() {
                             </div>
                             
                         </div>
+                        <div className="dash-transaction">
+                            <div className="client-transaction-table">
+                                <table>
+                                    <thead>
+                                        <th>Policy No.</th>
+                                        <th>Client Name</th>
+                                        <th>Insurance Type</th>
+                                        <th>Send Amount</th>
+                                        <th>Mode of Payment</th>
+                                        <th>Branch Name</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>001M</td>
+                                            <td>Geris Mumo</td>
+                                            <td>Health</td>
+                                            <td>$100</td>
+                                            <td>Mpesa</td>
+                                            <td>Mombasa</td>
+                                        </tr>
+                                        <tr>
+                                            <td>001N</td>
+                                            <td>John Doe</td>
+                                            <td>Property</td>
+                                            <td>$200</td>
+                                            <td>Bank</td>
+                                            <td>Nairobi</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div className="payment-mode">
+                                <div className="mode-rate">
+                                     <div className="circle" data-progress="36" style={{ '--progress': '36deg' }}>
+                                        36%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
