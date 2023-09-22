@@ -346,24 +346,55 @@ table tbody tr:hover {
   display: flex;
 }
 .dashboard .sidebar{
-  width: 10%;
+  width: 14%;
   background-color: white;
-
+  margin: 0;
 }
 .dashboard .sidebar .sidebar-log {
+  margin-top: 20px;
   display: flex;
   align-items: center;
+  flex-direction: column;
+  font-weight: bold;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 0px 40px;
+  height: inherit;
+} 
+.dashboard .sidebar .sidebar-log h3{
+  font-weight: bold;
 }
 .dashboard .sidebar .sidebar-links ul{
+  margin-top: 40px;
   list-style: none;
   text-decoration: none;
-  
 }
 .dashboard .sidebar .sidebar-links a {
   text-decoration: none;
 }
+.dashboard .sidebar .sidebar-links ul li a{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+  margin-bottom: 10px;
+  margin-right: 20px;
+  padding: 0px 10px;
+  background-color: whitesmoke;
+}
+.dashboard .sidebar .sidebar-links ul li a svg{
+  font-size: 30px;
+  color: orangered;
+}
+.dashboard .sidebar .sidebar-links ul li a p{
+  font-weight: bold;
+  font-size: 18px;
+}
+.dashboard .sidebar .sidebar-links ul li a:hover{
+  background-color: #488aec;
+}
 .dashboard .dash-content {
-  width: 88%;
+  width: 85%;
   display: flex;
   flex-direction: column;
 }
@@ -373,7 +404,7 @@ table tbody tr:hover {
   justify-content: space-between;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   background-color: white;
-}
+  }
 .dashboard .dash-header .dash-log {
   margin-left: 20px;
 }
@@ -389,13 +420,22 @@ table tbody tr:hover {
 }
 .dashboard .dash-header .header-detail .search input{
   border-radius: 5px;
-  /* border: 1px black; */
+  border: 2px solid #eee;
+  outline: none;
+  font-size: 16px;
+}
+.dashboard .dash-header .header-detail .search input[type="text"]:focus{
+  border-color: #488aec;
+}
+.dashboard .dash-header .header-detail .search input[type="text"]:hover{
+  border-color: #488aec;
 }
 .dashboard .dash-header .header-detail .branch-name {
   margin-right: 20px;
 }
 .dashboard .dash-header .header-detail .branch-name p{
   font-size: 20px;
+  font-weight: bold;
 }
 .dashboard .dash-main {
   margin-top: 10px;
@@ -404,7 +444,7 @@ table tbody tr:hover {
 .dashboard .main-card {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 60px;
 }
 .dashboard .cards {
   display: flex;
@@ -553,7 +593,7 @@ table tbody tr:hover {
 .dashboard .minor-cards {
   display: flex;
   justify-content: center;
-  gap: 30px;
+  gap: 70px;
 }
 
 /* policy card css */
@@ -739,7 +779,7 @@ table tbody tr:hover {
 }
 .dashboard .type-transactions .period-select select {
   width: 90px;
-  height: 40px;
+  height: 25px;
   border-radius: 0;
   border:  1px solid black;
   padding: 0;
@@ -766,7 +806,34 @@ table tbody tr:hover {
   margin-top: 20px;
   display: flex;
   justify-content: center;
-  gap: 40px;
+  gap: 90px;
+}
+.dashboard .dash-transaction .table-info {
+  display: flex;
+  flex-direction: column;
+}
+.dashboard .dash-transaction .table-info .download-table-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+.dashboard .dash-transaction .table-info .download-table-info p{
+  font-size: 14px;
+  font-weight: bold;
+}
+.dashboard .dash-transaction .table-info .download-table-info button {
+  border-radius: 5px;
+  border-color: #488aec;
+  background-color: #488aec;
+  color: white;
+}
+.dashboard .dash-transaction .table-info .download-table-info button:hover{
+  background-color: orangered;
+  border-color: orangered;
+}
+.dashboard .dash-transaction .client-transaction-table .download-table{
+  cursor: pointer;
 }
 .dashboard .dash-transaction .mode-rate{
   display: flex;
@@ -777,17 +844,34 @@ table tbody tr:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  width: 150px;
+  height: inherit;
+  padding: 5px 10px;
 }
-.dashboard .dash-transaction .mobile-transactions p{
+.dashboard .dash-transaction .mobile-transactions p:first-child{
   font-size: 20px;
   font-weight: bold;
+}
+.dashboard .dash-transaction .mobile-transactions p:last-child,
+.dashboard .dash-transaction .bank-transactions p:last-child
+{
+  font-size: 20px;
+  font-weight: 20px;
+  color: orangered;
 }
 .dashboard .dash-transaction .bank-transactions{
   display: flex;
   flex-direction: column;
-  align-items: center
+  align-items: center;
+  background-color: white;
+  border-radius: 5px;
+  width: 150px;
+  height: inherit;
+  padding: 5px 10px;
 }
-.dashboard .dash-transaction .bank-transactions p{
+.dashboard .dash-transaction .bank-transactions p:first-child{
   font-size: 20px;
   font-weight: bold;
 }

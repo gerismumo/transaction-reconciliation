@@ -1,7 +1,8 @@
-import { faFile, faMoneyBillAlt, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faHeart, faHome, faMoneyBillAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
 import React, { useState } from 'react';
-import { FiHeart, FiHome } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 
 
@@ -11,26 +12,38 @@ function Dashboard() {
     const handleSelectChange = (e) => {
         setSelectedOption(e.target.value);
     }
+    const[SearchInput, setSearchInput] = useState('');
 
+    const handleSearchInput = (e) => {
+        setSearchInput(e.target.value);
+    }
+
+    const handleDownLoadTable = () => {
+        const table = document.querySelector('.client-transaction-table table');
+        const doc = new jsPDF();
+        doc.autoTable({html: table});
+        doc.save('transaction-table.pdf');
+    }
     return (
         <div className="dashboard">
             <div className="dash-page">
                 <div className="sidebar">
                     <div className="sidebar-log">
-                        <h3>Insure now</h3>
+                        <h3>Insure Now</h3>
                     </div>
                     <div className="sidebar-links">
                         <ul>
                             <li>
                                 <Link to="/home">
-                                    <FiHome />
-                                    Home
+                                    <FontAwesomeIcon icon={faHome}/>
+                                   <p>Home</p> 
                                 </Link>
                             </li>
                             <li>
                                 <Link to="/home">
-                                    <FiHeart />
-                                    Health
+                                    <FontAwesomeIcon icon={faHeart}/>
+                                    <p>Health</p>
+                                    
                                 </Link>
                             </li>
                         </ul>
@@ -45,7 +58,8 @@ function Dashboard() {
                             <div className="search">
                                 <input 
                                 type="text" 
-                                value=""
+                                value={SearchInput}
+                                onChange={handleSearchInput}
                                 placeholder="search"
                                 />
                             </div>
@@ -189,35 +203,43 @@ function Dashboard() {
                             
                         </div>
                         <div className="dash-transaction">
-                            <div className="client-transaction-table">
-                                <table>
-                                    <thead>
-                                        <th>Policy No.</th>
-                                        <th>Client Name</th>
-                                        <th>Insurance Type</th>
-                                        <th>Send Amount</th>
-                                        <th>Mode of Payment</th>
-                                        <th>Branch Name</th>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>001M</td>
-                                            <td>Geris Mumo</td>
-                                            <td>Health</td>
-                                            <td>$100</td>
-                                            <td>Mpesa</td>
-                                            <td>Mombasa</td>
-                                        </tr>
-                                        <tr>
-                                            <td>001N</td>
-                                            <td>John Doe</td>
-                                            <td>Property</td>
-                                            <td>$200</td>
-                                            <td>Bank</td>
-                                            <td>Nairobi</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                            <div className="table-info">
+                                <div className="download-table-info">
+                                    <p>Download Transaction Data here...</p>
+                                    <button onClick={handleDownLoadTable}>Download</button>
+                                </div>
+                                <div className="client-transaction-table">
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th>Policy No.</th>
+                                                <th>Client Name</th>
+                                                <th>Insurance Type</th>
+                                                <th>Send Amount</th>
+                                                <th>Mode of Payment</th>
+                                                <th>Branch Name</th>
+                                            </tr>   
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>001M</td>
+                                                <td>Geris Mumo</td>
+                                                <td>Health</td>
+                                                <td>$100</td>
+                                                <td>Mpesa</td>
+                                                <td>Mombasa</td>
+                                            </tr>
+                                            <tr>
+                                                <td>001N</td>
+                                                <td>John Doe</td>
+                                                <td>Property</td>
+                                                <td>$200</td>
+                                                <td>Bank</td>
+                                                <td>Nairobi</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <div className="payment-mode">
                                 <div className="mode-rate">
@@ -226,12 +248,14 @@ function Dashboard() {
                                         <div className="bank-circle" data-progress="36" style={{ '--progress': '36deg' }}>
                                             36%
                                         </div>
+                                        <p>$50000</p>
                                     </div>
                                     <div className="mobile-transactions">
                                         <p>Mpesa</p>
                                         <div className="mobile-circle" data-progress="50" style={{ '--progress': '50deg' }}>
                                             50%
                                         </div>
+                                        <p>$30000</p>
                                     </div>
                                 </div>
                             </div>
