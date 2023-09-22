@@ -221,8 +221,17 @@ function Dashboard() {
                             </div>
                             <div className="payment-mode">
                                 <div className="mode-rate">
-                                     <div className="circle" data-progress="36" style={{ '--progress': '36deg' }}>
-                                        36%
+                                    <div className="bank-transactions">
+                                        <p>Bank</p>
+                                        <div className="bank-circle" data-progress="36" style={{ '--progress': '36deg' }}>
+                                            36%
+                                        </div>
+                                    </div>
+                                    <div className="mobile-transactions">
+                                        <p>Mpesa</p>
+                                        <div className="mobile-circle" data-progress="50" style={{ '--progress': '50deg' }}>
+                                            50%
+                                        </div>
                                     </div>
                                 </div>
                             </div>
