@@ -3,10 +3,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 
 function Dashboard() {
+    const { user } = useSelector((state) => state.auth)
+
     const[SelectedOption, setSelectedOption] = useState('Today');
 
     const handleSelectChange = (e) => {
@@ -64,7 +67,15 @@ function Dashboard() {
                                 />
                             </div>
                             <div className="branch-name">
-                                <p>Mombasa Branch</p>
+                                {user ? (
+                                    <>
+                                    <p>{user.branch} Branch</p>
+                                    </>
+                                ): (
+                                    <>
+                                    <p>Branch Name</p>
+                                    </>
+                                )}
                             </div>
                         </div>
                     </div>
