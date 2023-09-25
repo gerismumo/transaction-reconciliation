@@ -38,23 +38,77 @@ function Dashboard() {
           transaction.branch === user.branch
           
       );
-        //filter amount send by the insurance
-    let sumOfAmount = 0;
-    filteredTransactions.forEach((transaction) => {
-        sumOfAmount += transaction.amount;
-        const dateOfTransaction = new Date(transaction.date_of_payment);
-        const clientName = transaction.client_name;
-        console.log(clientName, dateOfTransaction);
-    });
-    console.log('sum of amount', sumOfAmount);
-    //filetr transatioction for health
-    const healthTransactions = filteredTransactions.filter(
-        (transaction) => transaction.coverage_type === 'Health'
-        );
 
-        let sumOfHealthTransaction = 0;
-            healthTransactions.forEach(transaction => sumOfHealthTransaction += transaction.amount);
+            //filter transactions according  to current month
 
+            const currentDate = new Date().toISOString().split('T')[0];
+            const currentYear = new Date(currentDate).getFullYear();
+            const currentMonth = new Date(currentDate).getMonth() +1;
+            const filterMonth = filteredTransactions.filter((transaction) => {
+                const transactionDate = new Date(transaction.date_of_payment);
+                const transactionYear = transactionDate.getFullYear();
+                const transactionMonth = transactionDate.getMonth() +1;
+                return transactionYear === currentYear&&transactionMonth === currentMonth;
+            });
+            
+            //sum of branch money according to month
+            let sumOfBranchMoney = 0;
+            filterMonth.forEach((transaction) => {
+                sumOfBranchMoney += transaction.amount;
+            });
+
+            //filter monthly health insurance according to month
+            const filterMonthlyHealth = filterMonth.filter(
+            (transaction) => transaction.coverage_type === 'Health'
+            );
+                //sum of monthly health insurance transactions
+            let sumOfHealthMonthTransaction = 0;
+                filterMonthlyHealth.forEach(transaction => sumOfHealthMonthTransaction += transaction.amount);
+            //filter property monthly insurance transactions
+
+            const filterMonthlyProperty = filterMonth.filter(
+                (transaction) => transaction.coverage_type === 'Property'
+            );
+                //sum of monthly property insurance transaction
+                let sumOfPropertyMonthTransaction = 0;
+                filterMonthlyProperty.forEach(transaction => sumOfPropertyMonthTransaction += transaction.amount);
+
+                //vehicle insurance money
+                //PrivateVehicle/Comprehensive
+                const filterMonthlyPrivateVC = filterMonth.filter(
+                    (transaction) => transaction.coverage_type === 'PrivateVehicle/Comprehensive'
+                );
+                    //sum of monthly PrivateVehicle/Comprehensive insurance transaction
+                    let sumOfPrivateVCMonthTransaction = 0;
+                    filterMonthlyPrivateVC.forEach(transaction => sumOfPrivateVCMonthTransaction += transaction.amount);
+
+                    //PrivateVehicle/ThirdParty
+                    const filterMonthlyPrivateVTP = filterMonth.filter(
+                        (transaction) => transaction.coverage_type === 'PrivateVehicle/ThirdParty'
+                    );
+                        //sum of monthly PrivateVehicle/ThirdParty insurance transaction
+                        let sumOfPrivateVTPMonthTransaction = 0;
+                        filterMonthlyPrivateVTP.forEach(transaction => sumOfPrivateVTPMonthTransaction += transaction.amount);
+
+                        //CommercialVehicle/Comprehensive
+                        const filterMonthlyCommercialVC = filterMonth.filter(
+                            (transaction) => transaction.coverage_type === 'CommercialVehicle/Comprehensive'
+                        );
+                            //sum of monthly CommercialVehicle/Comprehensive insurance transaction
+                            let sumOfCommercialVCMonthTransaction = 0;
+                            filterMonthlyCommercialVC.forEach(transaction => sumOfCommercialVCMonthTransaction += transaction.amount);
+                        
+                        //CommercialVehicle/ThirdParty
+
+                        const filterMonthlyCommercialVTP = filterMonth.filter(
+                            (transaction) => transaction.coverage_type === 'CommercialVehicle/ThirdParty'
+                        );
+                            //sum of monthly CommercialVehicle/Comprehensive insurance transaction
+                            let sumOfCommercialVTPMonthTransaction = 0;
+                            filterMonthlyCommercialVTP.forEach(transaction => sumOfCommercialVTPMonthTransaction += transaction.amount);
+
+                            let totalVehicleMonthInsurance = sumOfPrivateVCMonthTransaction + sumOfPrivateVTPMonthTransaction
+                                                            + sumOfCommercialVCMonthTransaction + sumOfCommercialVTPMonthTransaction;
     const[SelectedOption, setSelectedOption] = useState('Today');
 
     const handleSelectChange = (e) => {
@@ -140,7 +194,7 @@ function Dashboard() {
                                     <div className="money-rate">
                                         <div className="month-money">
                                             <p>current month</p>
-                                            <p>$30000</p>
+                                            <p>Ksh {sumOfBranchMoney}</p>
                                         </div>
                                         <div className="year-money">
                                             <p>current financial year</p>
@@ -244,15 +298,15 @@ function Dashboard() {
                                     <div className="insurance-money">
                                         <div className="property-insure">
                                             <p>Property</p>
-                                            <p>$3000</p>
+                                            <p>Ksh {sumOfPropertyMonthTransaction}</p>
                                         </div>
                                         <div className="health-insure">
                                             <p>Health</p>
-                                            <p>Ksh {sumOfHealthTransaction}</p>
+                                            <p>Ksh {sumOfHealthMonthTransaction}</p>
                                         </div>
                                         <div className="vehicle-tp">
                                             <p>Vehicles</p>
-                                            <p>$80000</p>
+                                            <p>ksh {totalVehicleMonthInsurance}</p>
                                         </div>
                                     </div>
                                 </div>
