@@ -32,11 +32,28 @@ function Dashboard() {
         };
       }, [user, navigate, isError, message, dispatch]);
 
+      //filter transation list according to insurance branch
       const filteredTransactions = transactions.filter(
         (transaction) =>
           transaction.branch === user.branch
+          
       );
+        //filter amount send by the insurance
+    let sumOfAmount = 0;
+    filteredTransactions.forEach((transaction) => {
+        sumOfAmount += transaction.amount;
+        const dateOfTransaction = new Date(transaction.date_of_payment);
+        const clientName = transaction.client_name;
+        console.log(clientName, dateOfTransaction);
+    });
+    console.log('sum of amount', sumOfAmount);
+    //filetr transatioction for health
+    const healthTransactions = filteredTransactions.filter(
+        (transaction) => transaction.coverage_type === 'Health'
+        );
 
+        let sumOfHealthTransaction = 0;
+            healthTransactions.forEach(transaction => sumOfHealthTransaction += transaction.amount);
 
     const[SelectedOption, setSelectedOption] = useState('Today');
 
@@ -55,6 +72,7 @@ function Dashboard() {
         doc.autoTable({html: table});
         doc.save('transaction-table.pdf');
     }
+
     return (
         <div className="dashboard">
             <div className="dash-page">
@@ -230,7 +248,7 @@ function Dashboard() {
                                         </div>
                                         <div className="health-insure">
                                             <p>Health</p>
-                                            <p>$5000</p>
+                                            <p>Ksh {sumOfHealthTransaction}</p>
                                         </div>
                                         <div className="vehicle-tp">
                                             <p>Vehicles</p>
@@ -255,6 +273,7 @@ function Dashboard() {
                                                 <th>Client Name</th>
                                                 <th>Insurance Type</th>
                                                 <th>Send Amount</th>
+                                                <th>Mode of Pay</th>
                                                 <th>Description</th>
                                             </tr>   
                                         </thead>
@@ -267,6 +286,7 @@ function Dashboard() {
                                                         <td>{transaction.client_name}</td>
                                                         <td>{transaction.coverage_type}</td>
                                                         <td>Ksh {transaction.amount}</td>
+                                                        <td>{transaction.modeOfPay}</td>
                                                         <td>{transaction.description}</td>
                                                     </tr>
                                                     ))}

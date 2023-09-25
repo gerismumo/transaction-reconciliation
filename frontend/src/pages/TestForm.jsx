@@ -37,6 +37,7 @@ function TestForm() {
     const userData = {
       policy_number,
       amount,
+      modeOfPay: e.target.modeOfPay.value
     };
 
     dispatch(addtransaction(userData));
