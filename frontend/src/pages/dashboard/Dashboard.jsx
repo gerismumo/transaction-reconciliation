@@ -2,13 +2,41 @@ import { faFile, faHeart, faHome, faMoneyBillAlt, faUser } from "@fortawesome/fr
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
-import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { reset } from '../../features/auth/authSlice';
+import { gettransactions } from "../../features/transactions/transactionSlice";
 
 
 function Dashboard() {
-    const { user } = useSelector((state) => state.auth)
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    //redux stuff
+    const { user } = useSelector((state) => state.auth);
+    const { transactions, isError, message } = useSelector((state) => state.transactions);
+    
+    useEffect(() => {
+        if (isError) {
+          console.log(message);
+        }
+    
+        if (!user) {
+          navigate('/');
+          return;
+        }
+        dispatch(gettransactions());
+    
+        return () => {
+          dispatch(reset());
+        };
+      }, [user, navigate, isError, message, dispatch]);
+
+      const filteredTransactions = transactions.filter(
+        (transaction) =>
+          transaction.branch === user.branch
+      );
+
 
     const[SelectedOption, setSelectedOption] = useState('Today');
 
@@ -227,28 +255,27 @@ function Dashboard() {
                                                 <th>Client Name</th>
                                                 <th>Insurance Type</th>
                                                 <th>Send Amount</th>
-                                                <th>Mode of Payment</th>
-                                                <th>Branch Name</th>
+                                                <th>Description</th>
                                             </tr>   
                                         </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td>001M</td>
-                                                <td>Geris Mumo</td>
-                                                <td>Health</td>
-                                                <td>$100</td>
-                                                <td>Mpesa</td>
-                                                <td>Mombasa</td>
-                                            </tr>
-                                            <tr>
-                                                <td>001N</td>
-                                                <td>John Doe</td>
-                                                <td>Property</td>
-                                                <td>$200</td>
-                                                <td>Bank</td>
-                                                <td>Nairobi</td>
-                                            </tr>
+                                        {
+                                            filteredTransactions.length > 0 ? (
+                                                <tbody>
+                                                    {filteredTransactions.map((transaction) => (
+                                                        <tr key={transaction._id}>
+                                                        <td>{transaction.policy_number}</td>
+                                                        <td>{transaction.client_name}</td>
+                                                        <td>{transaction.coverage_type}</td>
+                                                        <td>Ksh {transaction.amount}</td>
+                                                        <td>{transaction.description}</td>
+                                                    </tr>
+                                                    ))}
                                         </tbody>
+                                            ) : (
+                                                <p>No transcations made</p>
+                                            )
+                                        }
+                                        
                                     </table>
                                 </div>
                             </div>

@@ -313,6 +313,9 @@ table tbody tr:hover {
 .payment-form .heading{
  width: 60%;
 }
+#submit-transact {
+  margin-top: 50px;
+}
 /* Add more styles as needed */
 
 .loadingSpinnerContainer {
