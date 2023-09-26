@@ -5,6 +5,7 @@ import 'jspdf-autotable';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
+
 import { fetchUsers, reset } from '../../features/auth/authSlice';
 import { gettransactions } from "../../features/transactions/transactionSlice";
 
@@ -51,9 +52,61 @@ function Dashboard() {
 
       //filter branch users
       const filterUsers = users.filter(
-        (member) => member.branch === user.branch&&member.coverage_type !== ''
+        (member) => member.branch === user.branch&&member.coverage_type !== ''&&member.policy_number !== ''
       );
+      //filter paid policies
+
+      const filterPaidPolicies = users.filter(
+        (member) => member.branch === user.branch&&member.coverage_type !== ''&&member.policy_number !== ''&&member.annual_premium !== null
+      );
+
+      //getting the total transactions according to names
+      const findUserByName =  users.filter(
+        (member) => member.branch === user.branch&&member.coverage_type !== ''&&member.name
+      );
+
+      const findTransactionByName = transactions.filter(
+        (transaction) => transaction.branch === user.branch&&transaction.client_name
+      );
+
+      const clientNames = findUserByName.map((user) => user.name);
+      const transactionNames = findTransactionByName.map((transaction) => transaction.client_name);
+        // console.log('accessNames', clientNames);
+        // console.log('transactionNames', transactionNames);
+
+        const matchingNames = clientNames.filter((clientName) => transactionNames.includes(clientName));
+
+        // console.log('Matching names:', matchingNames);
+
+        const transactionTotals = {};
+
+        // Calculate total transactions for each matching name
+        transactions.forEach((transaction) => {
+        if (matchingNames.includes(transaction.client_name)) {
+            if (transactionTotals[transaction.client_name]) {
+            transactionTotals[transaction.client_name] += transaction.amount;
+            } else {
+            transactionTotals[transaction.client_name] = transaction.amount;
+            }
+        }
+        });
+
+    console.log('Transaction Totals for Matching Names:', transactionTotals);
+
+    const premiumMatches = clientNames.map((clientName) => {
+        const user = filterPaidPolicies.find((user) => user.name === clientName);
+        const totalTransactionAmount = transactionTotals[clientName] || 0;
+        const annualPremium = user ? user.annual_premium : null;
+        const matches = annualPremium !== null && totalTransactionAmount === annualPremium;
+        return { clientName, matches };
+      });
       
+      console.log('Premium Matches:', premiumMatches);
+      const trueMatchesCount = premiumMatches.filter((item) => item.matches).length;
+        const falseMatchesCount = premiumMatches.filter((item) => !item.matches).length;
+
+        // console.log('Number of true matches:', trueMatchesCount);
+        // console.log('Number of false matches:', falseMatchesCount);
     //filter montly created users 
         const filterMonthUsers = filterUsers.filter((member) => {
             const currentDate = new Date().toISOString().split('T')[0];
@@ -270,7 +323,10 @@ function Dashboard() {
                 
             )
         }
-    }, [SelectedOption]);
+    }, [SelectedOption, sumOfHealthTodayTransaction,sumOfPropertyTodayTransaction,
+        totalVehicleTodayInsurance,sumOfPropertyMonthTransaction,sumOfHealthMonthTransaction,
+        totalVehicleMonthInsurance
+    ]);
 
     const filterModeOfPay = filteredTransactions.filter((transaction) => {
         const ModeOfPayment = transaction.modeOfPay;
@@ -285,7 +341,7 @@ function Dashboard() {
       });
       //mpesa transactions in percentage
       const mpesaDegrees = (filterMpesaPayment.length / filterModeOfPay.length) * 360;
-      const mpesaPercentage = (filterMpesaPayment.length / filterModeOfPay.length) * 100;
+      const mpesaPercentage = Math.floor((filterMpesaPayment.length / filterModeOfPay.length) * 100);
       
       let totalMpesaMoney = 0;
       filterMpesaPayment.forEach((mpesa) => {
@@ -301,7 +357,7 @@ function Dashboard() {
     //   console.log('filterbankpayment',filterBankPayment);
       //bank transactions in percentage
       const bankDegrees = (filterBankPayment.length / filterModeOfPay.length) * 360;
-      const bankPercentage = (filterBankPayment.length / filterModeOfPay.length) * 100;
+      const bankPercentage = Math.floor((filterBankPayment.length / filterModeOfPay.length) * 100);
 
       let totalBankMoney = 0;
       filterBankPayment.forEach((bank) => {
@@ -427,13 +483,13 @@ function Dashboard() {
                                             <FontAwesomeIcon icon={faFile} />
                                         </div>
                                         <div className="policy-total">
-                                            <p>30</p>
+                                            <p>{filterUsers.length}</p>
                                             <p>New Policies</p>
                                         </div>
                                     </div>
                                     <div className="policy-category">
                                         <div className="pending-policy">
-                                            <p>10</p>
+                                            <p>{falseMatchesCount}</p>
                                             <p>pending</p>
                                         </div>
                                         <div className="inBind-policy">
@@ -441,7 +497,7 @@ function Dashboard() {
                                             <p>In bind</p>
                                         </div>
                                         <div className="closed-policy">
-                                            <p>11</p>
+                                            <p>{trueMatchesCount}</p>
                                             <p>Closed</p>
                                         </div>
                                     </div>
@@ -563,7 +619,7 @@ function Dashboard() {
                                         <div className="mobile-circle" data-progress={isNaN(mpesaPercentage) ? 0 : mpesaPercentage} style={{ '--progress': `${isNaN(mpesaDegrees) ? 0 : mpesaDegrees}deg` }}>
                                             {/* 50% */}
                                         </div>
-                                        <p>Ksh {totalBankMoney}</p>
+                                        <p>Ksh {totalMpesaMoney}</p>
                                     </div>
                                 </div>
                             </div>
