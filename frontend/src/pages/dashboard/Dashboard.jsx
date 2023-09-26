@@ -47,9 +47,37 @@ function Dashboard() {
       const filteredTransactions = transactions.filter(
         (transaction) =>
           transaction.branch === user.branch
-          
       );
+
+      
+      const filterModeOfPay = filteredTransactions.filter((transaction) => {
+        const ModeOfPayment = transaction.modeOfPay;
+        return ModeOfPayment;
+      });
+    //   console.log('filterModeOfPay', filterModeOfPay);
+
+      //filter transaction made through mpesa
+      const filterMpesaPayment = filterModeOfPay.filter((transaction) => {
+        const mpesa = transaction.modeOfPay === 'Mpesa';
+        return mpesa;
+      });
+      //mpesa transactions in percentage
+      const mpesaDegrees = (filterMpesaPayment.length / filterModeOfPay.length) * 360;
+      const mpesaPercentage = (filterMpesaPayment.length / filterModeOfPay.length) * 100;
+      
+      
+      //filter transactions made througn bank
+      const filterBankPayment = filterModeOfPay.filter((transaction) => {
+        const bank = transaction.modeOfPay === 'Bank';
+        return bank;
+      } );
+    //   console.log('filterbankpayment',filterBankPayment);
+      //bank transactions in percentage
+      const bankDegrees = (filterBankPayment.length / filterModeOfPay.length) * 360;
      
+      const bankPercentage = (filterBankPayment.length / filterModeOfPay.length) * 100;
+
+      
       //filter branch users
       const filterUsers = users.filter(
         (member) => member.branch === user.branch&&member.coverage_type !== ''
@@ -518,15 +546,15 @@ function Dashboard() {
                                 <div className="mode-rate">
                                     <div className="bank-transactions">
                                         <p>Bank</p>
-                                        <div className="bank-circle" data-progress="36" style={{ '--progress': '36deg' }}>
-                                            36%
+                                        <div className="bank-circle" data-progress={bankPercentage} style={{ '--progress': `${bankDegrees}deg` }}>
+                                            {/* 36% */}
                                         </div>
                                         <p>$50000</p>
                                     </div>
                                     <div className="mobile-transactions">
                                         <p>Mpesa</p>
-                                        <div className="mobile-circle" data-progress="50" style={{ '--progress': '50deg' }}>
-                                            50%
+                                        <div className="mobile-circle" data-progress={mpesaPercentage} style={{ '--progress': `${mpesaDegrees}deg` }}>
+                                            {/* 50% */}
                                         </div>
                                         <p>$30000</p>
                                     </div>
