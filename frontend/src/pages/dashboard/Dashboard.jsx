@@ -65,6 +65,11 @@ function Dashboard() {
       const mpesaDegrees = (filterMpesaPayment.length / filterModeOfPay.length) * 360;
       const mpesaPercentage = (filterMpesaPayment.length / filterModeOfPay.length) * 100;
       
+      let totalMpesaMoney = 0;
+      filterMpesaPayment.forEach((mpesa) => {
+        totalMpesaMoney += mpesa.amount;
+      });
+    //   console.log('Total Mpesa Money: ' + totalMpesaMoney);
       
       //filter transactions made througn bank
       const filterBankPayment = filterModeOfPay.filter((transaction) => {
@@ -74,10 +79,12 @@ function Dashboard() {
     //   console.log('filterbankpayment',filterBankPayment);
       //bank transactions in percentage
       const bankDegrees = (filterBankPayment.length / filterModeOfPay.length) * 360;
-     
       const bankPercentage = (filterBankPayment.length / filterModeOfPay.length) * 100;
 
-      
+      let totalBankMoney = 0;
+      filterBankPayment.forEach((bank) => {
+        totalBankMoney += bank.amount;
+      });
       //filter branch users
       const filterUsers = users.filter(
         (member) => member.branch === user.branch&&member.coverage_type !== ''
@@ -549,14 +556,14 @@ function Dashboard() {
                                         <div className="bank-circle" data-progress={bankPercentage} style={{ '--progress': `${bankDegrees}deg` }}>
                                             {/* 36% */}
                                         </div>
-                                        <p>$50000</p>
+                                        <p>Ksh {totalBankMoney}</p>
                                     </div>
                                     <div className="mobile-transactions">
                                         <p>Mpesa</p>
                                         <div className="mobile-circle" data-progress={mpesaPercentage} style={{ '--progress': `${mpesaDegrees}deg` }}>
                                             {/* 50% */}
                                         </div>
-                                        <p>$30000</p>
+                                        <p>Ksh {totalBankMoney}</p>
                                     </div>
                                 </div>
                             </div>
