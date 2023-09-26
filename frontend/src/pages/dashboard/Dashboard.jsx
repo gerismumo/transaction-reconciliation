@@ -49,42 +49,6 @@ function Dashboard() {
           transaction.branch === user.branch
       );
 
-      
-      const filterModeOfPay = filteredTransactions.filter((transaction) => {
-        const ModeOfPayment = transaction.modeOfPay;
-        return ModeOfPayment;
-      });
-    //   console.log('filterModeOfPay', filterModeOfPay);
-
-      //filter transaction made through mpesa
-      const filterMpesaPayment = filterModeOfPay.filter((transaction) => {
-        const mpesa = transaction.modeOfPay === 'Mpesa';
-        return mpesa;
-      });
-      //mpesa transactions in percentage
-      const mpesaDegrees = (filterMpesaPayment.length / filterModeOfPay.length) * 360;
-      const mpesaPercentage = (filterMpesaPayment.length / filterModeOfPay.length) * 100;
-      
-      let totalMpesaMoney = 0;
-      filterMpesaPayment.forEach((mpesa) => {
-        totalMpesaMoney += mpesa.amount;
-      });
-    //   console.log('Total Mpesa Money: ' + totalMpesaMoney);
-      
-      //filter transactions made througn bank
-      const filterBankPayment = filterModeOfPay.filter((transaction) => {
-        const bank = transaction.modeOfPay === 'Bank';
-        return bank;
-      } );
-    //   console.log('filterbankpayment',filterBankPayment);
-      //bank transactions in percentage
-      const bankDegrees = (filterBankPayment.length / filterModeOfPay.length) * 360;
-      const bankPercentage = (filterBankPayment.length / filterModeOfPay.length) * 100;
-
-      let totalBankMoney = 0;
-      filterBankPayment.forEach((bank) => {
-        totalBankMoney += bank.amount;
-      });
       //filter branch users
       const filterUsers = users.filter(
         (member) => member.branch === user.branch&&member.coverage_type !== ''
@@ -307,6 +271,42 @@ function Dashboard() {
             )
         }
     }, [SelectedOption]);
+
+    const filterModeOfPay = filteredTransactions.filter((transaction) => {
+        const ModeOfPayment = transaction.modeOfPay;
+        return ModeOfPayment;
+      });
+    //   console.log('filterModeOfPay', filterModeOfPay);
+
+      //filter transaction made through mpesa
+      const filterMpesaPayment = filterModeOfPay.filter((transaction) => {
+        const mpesa = transaction.modeOfPay === 'Mpesa';
+        return mpesa;
+      });
+      //mpesa transactions in percentage
+      const mpesaDegrees = (filterMpesaPayment.length / filterModeOfPay.length) * 360;
+      const mpesaPercentage = (filterMpesaPayment.length / filterModeOfPay.length) * 100;
+      
+      let totalMpesaMoney = 0;
+      filterMpesaPayment.forEach((mpesa) => {
+        totalMpesaMoney += mpesa.amount;
+      });
+    //   console.log('Total Mpesa Money: ' + totalMpesaMoney);
+      
+      //filter transactions made througn bank
+      const filterBankPayment = filterModeOfPay.filter((transaction) => {
+        const bank = transaction.modeOfPay === 'Bank';
+        return bank;
+      } );
+    //   console.log('filterbankpayment',filterBankPayment);
+      //bank transactions in percentage
+      const bankDegrees = (filterBankPayment.length / filterModeOfPay.length) * 360;
+      const bankPercentage = (filterBankPayment.length / filterModeOfPay.length) * 100;
+
+      let totalBankMoney = 0;
+      filterBankPayment.forEach((bank) => {
+        totalBankMoney += bank.amount;
+      });
         
     const[SearchInput, setSearchInput] = useState('');
 
@@ -553,14 +553,14 @@ function Dashboard() {
                                 <div className="mode-rate">
                                     <div className="bank-transactions">
                                         <p>Bank</p>
-                                        <div className="bank-circle" data-progress={bankPercentage} style={{ '--progress': `${bankDegrees}deg` }}>
+                                        <div className="bank-circle" data-progress={isNaN(bankPercentage) ? 0 : bankPercentage} style={{ '--progress': `${isNaN(bankDegrees)? 0 : bankDegrees}deg` }}>
                                             {/* 36% */}
                                         </div>
                                         <p>Ksh {totalBankMoney}</p>
                                     </div>
                                     <div className="mobile-transactions">
                                         <p>Mpesa</p>
-                                        <div className="mobile-circle" data-progress={mpesaPercentage} style={{ '--progress': `${mpesaDegrees}deg` }}>
+                                        <div className="mobile-circle" data-progress={isNaN(mpesaPercentage) ? 0 : mpesaPercentage} style={{ '--progress': `${isNaN(mpesaDegrees) ? 0 : mpesaDegrees}deg` }}>
                                             {/* 50% */}
                                         </div>
                                         <p>Ksh {totalBankMoney}</p>
