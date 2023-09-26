@@ -249,21 +249,30 @@ function Dashboard() {
         setSelectedOption(e.target.value);
     }
 
-    const[FilteredTransaction, setFilteredTransaction] = useState([]);
-
-    if(SelectedOption === 'Today') {
-        setFilteredTransaction(
-            {value: sumOfHealthTodayTransaction },
-            {value: sumOfPropertyTodayTransaction},
-            {value: totalVehicleTodayInsurance}  
-        )
-    } else if (SelectedOption === 'Month') {
-        setFilteredTransaction(
-            {id:1, value: sumOfPropertyMonthTransaction},
-            {value: sumOfHealthMonthTransaction},
-            {value: totalVehicleMonthInsurance}   
-        )
-    }
+    const[FilteredTransaction, setFilteredTransaction] = useState({
+        property: 0,
+        health: 0,
+        vehicle: 0
+    });
+    useEffect(() => {
+        if(SelectedOption === 'Today') {
+            setFilteredTransaction({
+                property: sumOfPropertyTodayTransaction,
+                health: sumOfHealthTodayTransaction,
+                vehicle: totalVehicleTodayInsurance
+            }
+            )
+        } else if (SelectedOption === 'Month') {
+            setFilteredTransaction({
+                property: sumOfPropertyMonthTransaction,
+                health: sumOfHealthMonthTransaction,
+                vehicle: totalVehicleMonthInsurance
+            }
+                
+            )
+        }
+    }, [SelectedOption]);
+        
     const[SearchInput, setSearchInput] = useState('');
 
     const handleSearchInput = (e) => {
@@ -450,15 +459,15 @@ function Dashboard() {
             
                                         <div  className="property-insure">
                                             <p>Property</p>
-                                            <p>Ksh </p>
+                                            <p>Ksh {FilteredTransaction.property}</p>
                                         </div>
                                         <div className="health-insure">
                                             <p>Health</p>
-                                            <p>Ksh </p>
+                                            <p>Ksh {FilteredTransaction.health}</p>
                                         </div>
                                         <div className="vehicle-tp">
                                             <p>Vehicles</p>
-                                            <p>ksh </p>
+                                            <p>ksh {FilteredTransaction.vehicle}</p>
                                         </div>
                                     </div>
                                 </div>
