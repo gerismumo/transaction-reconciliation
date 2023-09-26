@@ -5,7 +5,7 @@ import 'jspdf-autotable';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { reset } from '../../features/auth/authSlice';
+import { fetchUsers, reset } from '../../features/auth/authSlice';
 import { gettransactions } from "../../features/transactions/transactionSlice";
 
 
@@ -15,6 +15,8 @@ function Dashboard() {
     //redux stuff
     const { user } = useSelector((state) => state.auth);
     const { transactions, isError, message } = useSelector((state) => state.transactions);
+    const { users } = useSelector((state) => state.auth);
+    
     
     useEffect(() => {
         if (isError) {
@@ -31,6 +33,15 @@ function Dashboard() {
           dispatch(reset());
         };
       }, [user, navigate, isError, message, dispatch]);
+      
+      useEffect(() => {
+        dispatch(fetchUsers());
+
+        return () => {
+            dispatch(reset());
+        }
+      },[dispatch]);
+
 
       //filter transation list according to insurance branch
       const filteredTransactions = transactions.filter(
@@ -38,23 +49,83 @@ function Dashboard() {
           transaction.branch === user.branch
           
       );
+     
+      //filter branch users
+      const filterUsers = users.filter(
+        (member) => member.branch === user.branch&&member.coverage_type !== ''
+      );
+      
+    //filter montly created users 
+        const filterMonthUsers = filterUsers.filter((member) => {
+            const currentDate = new Date().toISOString().split('T')[0];
+            const currentYear = new Date(currentDate).getFullYear();
+            const currentMonth = new Date(currentDate).getMonth() +1;
+
+            const createdDate = new Date(member.createdAt);
+            const createdYear = createdDate.getFullYear();
+            const createdMonth = createdDate.getMonth() +1;
+
+            return createdYear === currentYear&&createdMonth === currentMonth;
+        });
+       
+    //filter yearly created users
+    // const filterYearUsers = filterUsers.filter((member) => {
+    //     const currentDate = new Date().toISOString().split('T')[0];
+    //     const currentYear = new Date(currentDate).getFullYear();
+    
+    //     const createdDate = new Date(member.createdAt);
+    //     const createdYear = createdDate.getFullYear();
+
+    //     return createdYear === currentYear;
+    // });
 
             //filter transactions according  to current month
 
             const currentDate = new Date().toISOString().split('T')[0];
             const currentYear = new Date(currentDate).getFullYear();
             const currentMonth = new Date(currentDate).getMonth() +1;
+            const currentDay = new Date(currentDate).getDay();
+
             const filterMonth = filteredTransactions.filter((transaction) => {
                 const transactionDate = new Date(transaction.date_of_payment);
                 const transactionYear = transactionDate.getFullYear();
                 const transactionMonth = transactionDate.getMonth() +1;
                 return transactionYear === currentYear&&transactionMonth === currentMonth;
             });
+
+            //filter transaction according to curreny Year
+            const filterYear = filteredTransactions.filter((transaction) => {
+                const transactionDate = new Date(transaction.date_of_payment);
+                const transactionYear = transactionDate.getFullYear();
+                return transactionYear === currentYear;
+            });
+            
+            //filter transaction according to day 
+
+            const filterToday = filteredTransactions.filter((transaction) => {
+                const transactionDate = new Date (transaction.date_of_payment);
+                const transactionYear = transactionDate.getFullYear();
+                const transactionMonth = transactionDate.getMonth() + 1
+                const transactionDay = transactionDate.getDay();
+
+                return currentYear === transactionYear&&
+                        currentMonth === transactionMonth&&
+                        currentDay === transactionDay;
+            });
+            // console.log('filter Day',filterToday );
+
+
+            //sum of branch money according to year 
+            let sumOfYearlyBranchMoney = 0;
+            filterYear.forEach((transaction) => {
+                sumOfYearlyBranchMoney+= transaction.amount;
+            });
+
             
             //sum of branch money according to month
-            let sumOfBranchMoney = 0;
+            let sumOfMonthlyBranchMoney = 0;
             filterMonth.forEach((transaction) => {
-                sumOfBranchMoney += transaction.amount;
+                sumOfMonthlyBranchMoney+= transaction.amount;
             });
 
             //filter monthly health insurance according to month
@@ -109,10 +180,89 @@ function Dashboard() {
 
                             let totalVehicleMonthInsurance = sumOfPrivateVCMonthTransaction + sumOfPrivateVTPMonthTransaction
                                                             + sumOfCommercialVCMonthTransaction + sumOfCommercialVTPMonthTransaction;
+
+
+        //todays transactions
+        // let sumOfDayBranchMoney = 0;
+        // filterToday.forEach((transaction) => {
+        //     sumOfDayBranchMoney+= transaction.amount;
+        // });
+
+        //filter today health insurance according to month
+        const filterTodayHealth = filterToday.filter(
+        (transaction) => transaction.coverage_type === 'Health'
+        );
+            //sum of today health insurance transactions
+        let sumOfHealthTodayTransaction = 0;
+            filterTodayHealth.forEach(transaction => sumOfHealthTodayTransaction += transaction.amount);
+        //filter property today insurance transactions
+
+        const filterTodayProperty = filterToday.filter(
+            (transaction) => transaction.coverage_type === 'Property'
+        );
+            //sum of monthly property insurance transaction
+            let sumOfPropertyTodayTransaction = 0;
+            filterTodayProperty.forEach(transaction => sumOfPropertyTodayTransaction += transaction.amount);
+
+            //vehicle insurance money
+            //PrivateVehicle/Comprehensive
+            const filterTodayPrivateVC = filterToday.filter(
+                (transaction) => transaction.coverage_type === 'PrivateVehicle/Comprehensive'
+            );
+                //sum of monthly PrivateVehicle/Comprehensive insurance transaction
+                let sumOfPrivateVCTodayTransaction = 0;
+                filterTodayPrivateVC.forEach(transaction => sumOfPrivateVCTodayTransaction += transaction.amount);
+
+                //PrivateVehicle/ThirdParty
+                const filterTodayPrivateVTP = filterToday.filter(
+                    (transaction) => transaction.coverage_type === 'PrivateVehicle/ThirdParty'
+                );
+                    //sum of monthly PrivateVehicle/ThirdParty insurance transaction
+                    let sumOfPrivateVTPTodayTransaction = 0;
+                    filterTodayPrivateVTP.forEach(transaction => sumOfPrivateVTPTodayTransaction += transaction.amount);
+
+                    //CommercialVehicle/Comprehensive
+                    const filterTodayCommercialVC = filterToday.filter(
+                        (transaction) => transaction.coverage_type === 'CommercialVehicle/Comprehensive'
+                    );
+                        //sum of monthly CommercialVehicle/Comprehensive insurance transaction
+                        let sumOfCommercialVCTodayTransaction = 0;
+                        filterTodayCommercialVC.forEach(transaction => sumOfCommercialVCTodayTransaction += transaction.amount);
+                    
+                    //CommercialVehicle/ThirdParty
+
+                    const filterTodayCommercialVTP = filterToday.filter(
+                        (transaction) => transaction.coverage_type === 'CommercialVehicle/ThirdParty'
+                    );
+                        //sum of monthly CommercialVehicle/Comprehensive insurance transaction
+                        let sumOfCommercialVTPTodayTransaction = 0;
+                        filterTodayCommercialVTP.forEach(transaction => sumOfCommercialVTPTodayTransaction += transaction.amount);
+
+                        let totalVehicleTodayInsurance = sumOfPrivateVCTodayTransaction + sumOfPrivateVTPTodayTransaction
+                                                        + sumOfCommercialVCTodayTransaction + sumOfCommercialVTPTodayTransaction;
+    
+                                                                                                              
+
     const[SelectedOption, setSelectedOption] = useState('Today');
 
     const handleSelectChange = (e) => {
         setSelectedOption(e.target.value);
+    }
+
+    const[FilteredTransaction, setFilteredTransaction] = useState([]);
+
+    if(SelectedOption === 'Today') {
+        setFilteredTransaction(
+            {value: sumOfHealthTodayTransaction },
+            {value: sumOfPropertyTodayTransaction},
+            {value: totalVehicleTodayInsurance}  
+        )
+    } else if (SelectedOption === 'Month') {
+        setFilteredTransaction(
+            {id:1, value: sumOfPropertyMonthTransaction},
+            {value: sumOfHealthMonthTransaction},
+            {value: totalVehicleMonthInsurance}   
+        )
     }
     const[SearchInput, setSearchInput] = useState('');
 
@@ -194,11 +344,11 @@ function Dashboard() {
                                     <div className="money-rate">
                                         <div className="month-money">
                                             <p>current month</p>
-                                            <p>Ksh {sumOfBranchMoney}</p>
+                                            <p>Ksh {sumOfMonthlyBranchMoney}</p>
                                         </div>
                                         <div className="year-money">
                                             <p>current financial year</p>
-                                            <p>$800000</p>
+                                            <p>Ksh {sumOfYearlyBranchMoney}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -214,11 +364,11 @@ function Dashboard() {
                                     <div className="money-rate">
                                         <div className="month-money">
                                             <p>Current Month</p>
-                                            <p>22</p>
+                                            <p>{filterMonthUsers.length}</p>
                                         </div>
                                         <div className="year-money">
                                             <p>Total members</p>
-                                            <p>321</p>
+                                            <p>{filterUsers.length}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -292,21 +442,23 @@ function Dashboard() {
                                         onChange={handleSelectChange}
                                         >
                                             <option value='Today'>Today</option>
-                                            <option value='Moth'>Month</option>
+                                            <option value='Month'>Month</option>
                                         </select>
                                     </div>
                                     <div className="insurance-money">
-                                        <div className="property-insure">
+                                        
+            
+                                        <div  className="property-insure">
                                             <p>Property</p>
-                                            <p>Ksh {sumOfPropertyMonthTransaction}</p>
+                                            <p>Ksh </p>
                                         </div>
                                         <div className="health-insure">
                                             <p>Health</p>
-                                            <p>Ksh {sumOfHealthMonthTransaction}</p>
+                                            <p>Ksh </p>
                                         </div>
                                         <div className="vehicle-tp">
                                             <p>Vehicles</p>
-                                            <p>ksh {totalVehicleMonthInsurance}</p>
+                                            <p>ksh </p>
                                         </div>
                                     </div>
                                 </div>
