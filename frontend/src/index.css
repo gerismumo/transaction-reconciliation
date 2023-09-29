@@ -189,33 +189,34 @@ table tbody tr:hover {
 /* Styles for small and medium screens */
 @media (max-width: 768px) {
   table {
-    font-size: 14px; /* Reduce font size for smaller screens */
+    font-size: 14px;
+    overflow-x: auto;
+    overflow-y: auto; /* Reduce font size for smaller screens */
   }
 
   th,
   td {
-    padding: 6px; /* Adjust cell padding for smaller screens */
+    padding: 6px; 
   }
-
   /* Hide table headers on small screens */
-  th {
+  /* th {
     display: none;
-  }
+  } */
 
   /* Style the table rows for small screens */
   tbody tr {
-    display: block;
-    margin-bottom: 10px;
+    /* display: block; */
+    /* margin-bottom: 10px; */
     border: 1px solid #ddd;
     background-color: #fff; /* Reset background color for rows on small screens */
   }
 
   /* Style the table cells for small screens */
   td {
-    display: flex;
+    /* display: flex;
     flex-direction: column;
     padding: 6px;
-    text-align: left;
+    text-align: left; */
     border-bottom: 1px solid #ddd; /* Add a border between table cells */
   }
 
@@ -597,6 +598,9 @@ table tbody tr:hover {
   display: flex;
   justify-content: center;
   gap: 70px;
+  /* display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 1rem; */
 }
 
 /* policy card css */
@@ -922,5 +926,78 @@ table tbody tr:hover {
   text-align: center;
 }
 
+@media (max-width: 768px) {
+  /* Adjustments for smaller screens */
+  .dashboard .dash-page {
+    flex-direction: column; /* Stack components vertically */
+  }
+
+  .dashboard .sidebar {
+    width: 100%; /* Full width */
+    display: none;
+  }
+
+  .dashboard .dash-content {
+    width: 100%; /* Full width */
+  }
+  .dashboard .dash-main {
+    display: flex;
+    flex-direction: column;
+  }
+  .dashboard .cards{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .dashboard .main-card{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: flex;
+    gap: 10px;
+  }
+  .dashboard .minor-cards{
+    display: flex;
+     flex-wrap: wrap;
+    flex-direction: flex;
+    gap: 10px;
+   
+  /* grid-template-columns: 1fr; */
+  }
+  .dashboard .policy-card{
+    width: 150px;
+    flex-wrap: nowrap;
+  }
+  .dashboard .claims-card {
+    width: 150px;
+    flex-wrap: nowrap;
+  }
+  .dashboard .type-transactions{
+    width: 150px;
+    flex-wrap: nowrap;
+  }
+  .dashboard .dash-transaction {
+    display: flex;
+    flex-direction: column;
+  }
+  .dashboard .dash-transaction .client-transaction-table table{
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 576px) {
+  /* Additional adjustments for even smaller screens */
+  .dashboard .minor-cards {
+    flex-direction: column; /* Stack minor cards vertically */
+    gap: 20px; /* Adjust the gap */
+  }
+
+  .dashboard .dash-transaction {
+    flex-direction: column; /* Stack dash-transaction elements vertically */
+    gap: 20px; /* Adjust the gap */
+  }
+
+  /* ... (other adjustments as needed) */
+}
 
 

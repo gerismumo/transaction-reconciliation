@@ -1,4 +1,4 @@
-import { faFile, faHeart, faHome, faMoneyBillAlt, faUser } from "@fortawesome/free-solid-svg-icons";
+import { faFile, faHome, faMoneyBillAlt, faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
@@ -101,7 +101,7 @@ function Dashboard() {
         return { clientName, matches };
       });
       
-      console.log('Premium Matches:', premiumMatches);
+    //   console.log('Premium Matches:', premiumMatches);
       const trueMatchesCount = premiumMatches.filter((item) => item.matches).length;
         const falseMatchesCount = premiumMatches.filter((item) => !item.matches).length;
 
@@ -165,7 +165,8 @@ function Dashboard() {
                         currentDay === transactionDay;
             });
             // console.log('filter Day',filterToday );
-
+            
+                
 
             //sum of branch money according to year 
             let sumOfYearlyBranchMoney = 0;
@@ -363,6 +364,9 @@ function Dashboard() {
       filterBankPayment.forEach((bank) => {
         totalBankMoney += bank.amount;
       });
+
+
+      //get transaction send by day and send them
         
     const[SearchInput, setSearchInput] = useState('');
 
@@ -393,11 +397,11 @@ function Dashboard() {
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/home">
+                                {/* <Link to="/home">
                                     <FontAwesomeIcon icon={faHeart}/>
                                     <p>Health</p>
                                     
-                                </Link>
+                                </Link> */}
                             </li>
                         </ul>
                     </div>
@@ -408,14 +412,14 @@ function Dashboard() {
                             <h2>Dashboard</h2>
                         </div>
                         <div className="header-detail">
-                            <div className="search">
+                            {/* <div className="search">
                                 <input 
                                 type="text" 
                                 value={SearchInput}
                                 onChange={handleSearchInput}
                                 placeholder="search"
                                 />
-                            </div>
+                            </div> */}
                             <div className="branch-name">
                                 {user ? (
                                     <>
@@ -492,10 +496,10 @@ function Dashboard() {
                                             <p>{falseMatchesCount}</p>
                                             <p>pending</p>
                                         </div>
-                                        <div className="inBind-policy">
+                                        {/* <div className="inBind-policy">
                                             <p>9</p>
                                             <p>In bind</p>
-                                        </div>
+                                        </div> */}
                                         <div className="closed-policy">
                                             <p>{trueMatchesCount}</p>
                                             <p>Closed</p>
