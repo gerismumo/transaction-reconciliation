@@ -166,42 +166,10 @@ function Dashboard() {
                         currentDay === transactionDay;
             });
             // console.log('filter Day',filterToday );
-            let sumOfTodayBranchMoney = 0;
-            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-            const dailyTransactionTotal = {
-            Sunday: 0,
-            Monday: 0,
-            Tuesday: 0,
-            Wednesday: 0,
-            Thursday: 0,
-            Friday: 0,
-            Saturday: 0
-            };
-
-            const data = [
-            { name: 'Sunday', value: 0 },
-            { name: 'Monday', value: 0 },
-            { name: 'Tuesday', value: 0 },
-            { name: 'Wednesday', value: 0 },
-            { name: 'Thursday', value: 0 },
-            { name: 'Friday', value: 0 },
-            { name: 'Saturday', value: 0 }
-            ];
-
-            filterToday.forEach((transaction) => {
-            const transactionDate = new Date(transaction.date_of_payment);
-            const dayOfWeekIndex = transactionDate.getDay();
-            const dayOfWeek = daysOfWeek[dayOfWeekIndex];
-            dailyTransactionTotal[dayOfWeek] += transaction.amount;
-            console.log('Total transaction amounts for each day of the week:', dailyTransactionTotal);
-            });
-
-            const updatedData = data.map((item) => ({
-            ...item,
-            value: dailyTransactionTotal[item.name]
-            }));
-
-            console.log('updatedData', updatedData);
+          
+              
+              
+            //   console.log('Updated monthly data:', updatedMonthlyData);
             
             //table data
             
@@ -407,6 +375,50 @@ function Dashboard() {
 
 
       //get transaction send by day and send them
+
+      //transaction graph data here
+      const months = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December']
+      const monthlyTransactionTotal = {
+          January: 0,
+          February: 0,
+          March: 0,
+          April: 0,
+          May: 0,
+          June: 0,
+          July: 0,
+          August: 0,
+          September: 0,
+          October: 0,
+          November: 0,
+          December: 0
+        };
+        
+        filterYear.forEach((transaction) => {
+          const transactionDate = new Date(transaction.date_of_payment);
+          const monthIndex = transactionDate.getMonth();
+          const monthOfYear = months[monthIndex];
+          monthlyTransactionTotal[monthOfYear] += transaction.amount;
+          // console.log('Total transactions for :', monthlyTransactionTotal);
+        });
+        
+        const monthlyData = [
+          { name: 'January', value: 0 },
+          { name: 'February', value: 0 },
+          { name: 'March', value: 0 },
+          { name: 'April', value: 0 },
+          { name: 'May', value: 0 },
+          { name: 'June', value: 0 },
+          { name: 'August', value: 0 },
+          { name: 'September', value: 0 },
+          { name: 'October', value: 0 },
+          { name: 'November', value: 0 },
+          { name: 'December', value: 0 },
+        ];
+
+        const updatedMonthlyData = monthlyData.map((item) => ({
+            ...item,
+            value: monthlyTransactionTotal[item.name]
+          }));
         
     const[SearchInput, setSearchInput] = useState('');
 
@@ -612,10 +624,10 @@ function Dashboard() {
                         <div className="dash-transaction">
                             <div className="transactions-graph">
                                 <p>Transaction Graph</p>
-                                <LineChart width={600} height={300} backgroundColor='white' data={updatedData}>
+                                <LineChart width={600} height={300} backgroundColor='white' data={updatedMonthlyData}>
                                     <CartesianGrid strokeDasharray="3 3" />
                                     <XAxis dataKey="name"  label={{ value: 'Month', position: 'insideBottom', offset: -10 }}/>
-                                    <YAxis label={{value: 'Value', position: 'insideLeft', angle:'-90' }}/>
+                                    <YAxis label={{value: 'Money in Ksh', position: 'insideLeft', angle:'-90' }}/>
                                     <Tooltip />
                                     <Legend />
                                     <Line type="monotone" dataKey="value" stroke="#8884d8"  />
