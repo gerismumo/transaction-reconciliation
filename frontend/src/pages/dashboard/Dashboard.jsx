@@ -188,6 +188,7 @@ function Dashboard() {
                 //sum of monthly health insurance transactions
             let sumOfHealthMonthTransaction = 0;
                 filterMonthlyHealth.forEach(transaction => sumOfHealthMonthTransaction += transaction.amount);
+                // console.log('sumOfHealthMonthTransaction',sumOfHealthMonthTransaction)
             //filter property monthly insurance transactions
 
             const filterMonthlyProperty = filterMonth.filter(
@@ -253,7 +254,7 @@ function Dashboard() {
         const filterTodayProperty = filterToday.filter(
             (transaction) => transaction.coverage_type === 'Property'
         );
-            //sum of monthly property insurance transaction
+            //sum of today property insurance transaction
             let sumOfPropertyTodayTransaction = 0;
             filterTodayProperty.forEach(transaction => sumOfPropertyTodayTransaction += transaction.amount);
 
@@ -328,7 +329,7 @@ function Dashboard() {
         totalVehicleTodayInsurance,sumOfPropertyMonthTransaction,sumOfHealthMonthTransaction,
         totalVehicleMonthInsurance
     ]);
-
+    console.log('FilteredTransaction',FilteredTransaction.health)
     const filterModeOfPay = filteredTransactions.filter((transaction) => {
         const ModeOfPayment = transaction.modeOfPay;
         return ModeOfPayment;
