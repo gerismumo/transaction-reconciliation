@@ -167,26 +167,46 @@ function Dashboard() {
             });
             // console.log('filter Day',filterToday );
             let sumOfTodayBranchMoney = 0;
+            const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            const dailyTransactionTotal = {
+            Sunday: 0,
+            Monday: 0,
+            Tuesday: 0,
+            Wednesday: 0,
+            Thursday: 0,
+            Friday: 0,
+            Saturday: 0
+            };
+
+            const data = [
+            { name: 'Sunday', value: 0 },
+            { name: 'Monday', value: 0 },
+            { name: 'Tuesday', value: 0 },
+            { name: 'Wednesday', value: 0 },
+            { name: 'Thursday', value: 0 },
+            { name: 'Friday', value: 0 },
+            { name: 'Saturday', value: 0 }
+            ];
+
             filterToday.forEach((transaction) => {
-                sumOfTodayBranchMoney += transaction.amount;
-                const transactionDate = new Date(transaction.date_of_payment); 
-                const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-                const dayOfWeekIndex = transactionDate.getDay();
-                const dayOfWeek = daysOfWeek[dayOfWeekIndex];
-                console.log(`Transactions for ${dayOfWeek}: ${sumOfTodayBranchMoney}`);
+            const transactionDate = new Date(transaction.date_of_payment);
+            const dayOfWeekIndex = transactionDate.getDay();
+            const dayOfWeek = daysOfWeek[dayOfWeekIndex];
+            dailyTransactionTotal[dayOfWeek] += transaction.amount;
+            console.log('Total transaction amounts for each day of the week:', dailyTransactionTotal);
             });
+
+            const updatedData = data.map((item) => ({
+            ...item,
+            value: dailyTransactionTotal[item.name]
+            }));
+
+            console.log('updatedData', updatedData);
             
             //table data
-            const data = [
-                { name: 'January', value: 30 },
-                { name: 'February', value: 40 },
-                { name: 'March', value: 25 },
-                { name: 'April', value: 45 },
-                { name: 'May', value: 35 },
-                { name: 'June', value: 50 },
-              ];
+            
                 
-
+             
             //sum of branch money according to year 
             let sumOfYearlyBranchMoney = 0;
             filterYear.forEach((transaction) => {
@@ -591,10 +611,11 @@ function Dashboard() {
                         </div>
                         <div className="dash-transaction">
                             <div className="transactions-graph">
-                                <LineChart width={600} height={300} data={data}>
+                                <p>Transaction Graph</p>
+                                <LineChart width={600} height={300} backgroundColor='white' data={updatedData}>
                                     <CartesianGrid strokeDasharray="3 3" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis dataKey="value"/>
+                                    <XAxis dataKey="name"  label={{ value: 'Month', position: 'insideBottom', offset: -10 }}/>
+                                    <YAxis label={{value: 'Value', position: 'insideLeft', angle:'-90' }}/>
                                     <Tooltip />
                                     <Legend />
                                     <Line type="monotone" dataKey="value" stroke="#8884d8"  />

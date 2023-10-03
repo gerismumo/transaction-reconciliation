@@ -812,14 +812,21 @@ table tbody tr:hover {
 .dashboard .dash-transaction  {
   margin-top: 20px;
   display: flex;
-  justify-content: center;
-  gap: 90px;
+  /* justify-content: center;
+  gap: 90px; */
+  justify-content: space-around;
 }
-.dashboard .dash-transaction .transaction-graph {
+.dashboard .dash-transaction .transactions-graph {
   display: flex;
   align-items: center;
-  width: 70%;
-  height: 700px;
+  flex-direction: column;
+}
+.dashboard .dash-transaction .transactions-graph p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 20px;
 }
 .dashboard  .table-info {
   display: flex;
