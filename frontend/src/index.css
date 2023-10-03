@@ -815,21 +815,27 @@ table tbody tr:hover {
   justify-content: center;
   gap: 90px;
 }
-.dashboard .dash-transaction .table-info {
+.dashboard .dash-transaction .transaction-graph {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  height: 700px;
+}
+.dashboard  .table-info {
   display: flex;
   flex-direction: column;
 }
-.dashboard .dash-transaction .table-info .download-table-info {
+.dashboard  .table-info .download-table-info {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 30px;
 }
-.dashboard .dash-transaction .table-info .download-table-info p{
+.dashboard  .table-info .download-table-info p{
   font-size: 14px;
   font-weight: bold;
 }
-.dashboard .dash-transaction .table-info .download-table-info button {
+.dashboard  .table-info .download-table-info button {
   border-radius: 5px;
   border-color: #488aec;
   background-color: #488aec;

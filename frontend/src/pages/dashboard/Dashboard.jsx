@@ -6,9 +6,10 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 
+
+import { CartesianGrid, Legend, Line, LineChart, Tooltip, XAxis, YAxis } from 'recharts';
 import { fetchUsers, reset } from '../../features/auth/authSlice';
 import { gettransactions } from "../../features/transactions/transactionSlice";
-
 
 function Dashboard() {
     const navigate = useNavigate();
@@ -165,7 +166,25 @@ function Dashboard() {
                         currentDay === transactionDay;
             });
             // console.log('filter Day',filterToday );
+            let sumOfTodayBranchMoney = 0;
+            filterToday.forEach((transaction) => {
+                sumOfTodayBranchMoney += transaction.amount;
+                const transactionDate = new Date(transaction.date_of_payment); 
+                const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const dayOfWeekIndex = transactionDate.getDay();
+                const dayOfWeek = daysOfWeek[dayOfWeekIndex];
+                console.log(`Transactions for ${dayOfWeek}: ${sumOfTodayBranchMoney}`);
+            });
             
+            //table data
+            const data = [
+                { name: 'January', value: 30 },
+                { name: 'February', value: 40 },
+                { name: 'March', value: 25 },
+                { name: 'April', value: 45 },
+                { name: 'May', value: 35 },
+                { name: 'June', value: 50 },
+              ];
                 
 
             //sum of branch money according to year 
@@ -571,7 +590,36 @@ function Dashboard() {
                             
                         </div>
                         <div className="dash-transaction">
-                            <div className="table-info">
+                            <div className="transactions-graph">
+                                <LineChart width={600} height={300} data={data}>
+                                    <CartesianGrid strokeDasharray="3 3" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis dataKey="value"/>
+                                    <Tooltip />
+                                    <Legend />
+                                    <Line type="monotone" dataKey="value" stroke="#8884d8"  />
+                                </LineChart>
+                            </div>
+                            <div className="payment-mode">
+                                <div className="mode-rate">
+                                    <div className="bank-transactions">
+                                        <p>Bank</p>
+                                        <div className="bank-circle" data-progress={isNaN(bankPercentage) ? 0 : bankPercentage} style={{ '--progress': `${isNaN(bankDegrees)? 0 : bankDegrees}deg` }}>
+                                            {/* 36% */}
+                                        </div>
+                                        <p>Ksh {totalBankMoney}</p>
+                                    </div>
+                                    <div className="mobile-transactions">
+                                        <p>Mpesa</p>
+                                        <div className="mobile-circle" data-progress={isNaN(mpesaPercentage) ? 0 : mpesaPercentage} style={{ '--progress': `${isNaN(mpesaDegrees) ? 0 : mpesaDegrees}deg` }}>
+                                            {/* 50% */}
+                                        </div>
+                                        <p>Ksh {totalMpesaMoney}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="table-info">
                                 <div className="download-table-info">
                                     <p>Download Transaction Data here...</p>
                                     <button onClick={handleDownLoadTable}>Download</button>
@@ -609,25 +657,6 @@ function Dashboard() {
                                         
                                     </table>
                                 </div>
-                            </div>
-                            <div className="payment-mode">
-                                <div className="mode-rate">
-                                    <div className="bank-transactions">
-                                        <p>Bank</p>
-                                        <div className="bank-circle" data-progress={isNaN(bankPercentage) ? 0 : bankPercentage} style={{ '--progress': `${isNaN(bankDegrees)? 0 : bankDegrees}deg` }}>
-                                            {/* 36% */}
-                                        </div>
-                                        <p>Ksh {totalBankMoney}</p>
-                                    </div>
-                                    <div className="mobile-transactions">
-                                        <p>Mpesa</p>
-                                        <div className="mobile-circle" data-progress={isNaN(mpesaPercentage) ? 0 : mpesaPercentage} style={{ '--progress': `${isNaN(mpesaDegrees) ? 0 : mpesaDegrees}deg` }}>
-                                            {/* 50% */}
-                                        </div>
-                                        <p>Ksh {totalMpesaMoney}</p>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
