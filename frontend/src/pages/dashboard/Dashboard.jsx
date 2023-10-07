@@ -379,18 +379,18 @@ function Dashboard() {
       //transaction graph data here
       const months = ['January', 'February', 'March', 'April', 'May', 'June','July', 'August', 'September', 'October', 'November', 'December']
       const monthlyTransactionTotal = {
-          January: 0,
-          February: 0,
-          March: 0,
-          April: 0,
-          May: 0,
-          June: 0,
-          July: 0,
-          August: 0,
-          September: 0,
-          October: 0,
-          November: 0,
-          December: 0
+          January: null,
+          February: null,
+          March: null,
+          April: null,
+          May: null,
+          June: null,
+          July: null,
+          August: null,
+          September: null,
+          October: null,
+          November: null,
+          December: null
         };
         
         filterYear.forEach((transaction) => {
@@ -459,19 +459,12 @@ function Dashboard() {
                     </div>
                 </div>
                 <div className="dash-content">
-                    <div className="dash-header">
+                    {/* <div className="dash-header">
                         <div className="dash-log">
                             <h2>Dashboard</h2>
                         </div>
                         <div className="header-detail">
-                            {/* <div className="search">
-                                <input 
-                                type="text" 
-                                value={SearchInput}
-                                onChange={handleSearchInput}
-                                placeholder="search"
-                                />
-                            </div> */}
+                            
                             <div className="branch-name">
                                 {user ? (
                                     <>
@@ -484,7 +477,7 @@ function Dashboard() {
                                 )}
                             </div>
                         </div>
-                    </div>
+                    </div> */}
                     <div className="dash-main">
                         <div className="main-card">
                             <div className="cards">
